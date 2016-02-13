@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Dotspec")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A lightweight .NET library for writing behaviour-driven unit tests")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Justin Zhong")]
 [assembly: AssemblyProduct("Dotspec")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
