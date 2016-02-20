@@ -3,6 +3,80 @@ using System.Collections.Generic;
 
 namespace Dotspec
 {
+    public interface IOnAssert<TSubject>
+        where TSubject : class
+    {
+        event EventHandler<TSubject> OnAssert;
+    }
+
+    public class PreconditionSpec<TSubject, TData> : Spec<TSubject>, IOnAssert<TSubject>
+        where TSubject : class
+    {
+        private readonly TData _data;
+
+        public event EventHandler<TSubject> OnAssert;
+
+        public PreconditionSpec(Spec<TSubject> spec, TData val) : base(spec.Scenario)
+        {
+            _data = val;
+        }
+
+        public PreconditionSpec<TSubject, TData> When(Action<TSubject, TData> whenBehaviour)
+        {
+            When(context => whenBehaviour(context.Subject, _data));
+
+            return this;
+        }
+
+        public BehaviourSpec<TSubject, TData, TResult> When<TResult>(Func<TSubject, TData, TResult> whenBehaviour)
+        {
+            Func<TResult> resultFunc = () => default(TResult);
+
+            When(context => {
+                var result = whenBehaviour(context.Subject, _data);
+
+                resultFunc = () => result;
+            });
+
+            var spec = new BehaviourSpec<TSubject, TData, TResult>(this, _data, resultFunc);
+            spec.OnAssert += (_, subject) => Assert(subject);
+
+            return spec;
+        }
+
+        public override void Assert(TSubject subject)
+        {
+            OnAssert(this, subject);
+        }
+    }
+
+    public class BehaviourSpec<TSubject, TData, TResult> : Spec<TSubject>, IOnAssert<TSubject>
+        where TSubject : class
+    {
+        private readonly TData _data;
+        private readonly Func<TResult> _resultFunc;
+
+        public event EventHandler<TSubject> OnAssert;
+
+        public BehaviourSpec(Spec<TSubject> spec, TData data, Func<TResult> resultFunc) : base(spec.Scenario)
+        {
+            _data = data;
+            _resultFunc = resultFunc;
+        }
+
+        public BehaviourSpec<TSubject, TData, TResult> Then(Action<TData, TResult> thenAssertions)
+        {
+            Then(context => thenAssertions(_data, _resultFunc()));
+
+            return this;
+        }
+
+        public override void Assert(TSubject subject)
+        {
+            OnAssert(this, subject);
+        }
+    }
+
     /// <summary>
     /// Represents a specification for a test scenario.
     /// </summary>
@@ -18,7 +92,7 @@ namespace Dotspec
 
         private readonly List<Action<SubjectContext<TSubject>>> _thenOutcomes;
 
-        private readonly string _scenario;
+        public readonly string Scenario;
 
         /// <summary>
         /// Creates a new Spec test scenario.
@@ -33,14 +107,14 @@ namespace Dotspec
             _givenPreconditions = new List<Action<SubjectContext<TSubject>>>();
             _whenBehaviours = new List<Action<SubjectContext<TSubject>>>();
             _thenOutcomes = new List<Action<SubjectContext<TSubject>>>();
-            _scenario = scenario;
+            Scenario = scenario;
         }
 
         /// <summary>
         /// Asserts this Spec test scenario with the subject supplied.
         /// </summary>
         /// <param name="subject"></param>
-        public void Assert(TSubject subject)
+        public virtual void Assert(TSubject subject)
         {
             if (subject == null) throw new ArgumentNullException("subject");
 
@@ -49,6 +123,21 @@ namespace Dotspec
             RunSteps(context, _givenPreconditions, false);
             RunSteps(context, _whenBehaviours, _assertException);
             RunSteps(context, _thenOutcomes, false);
+        }
+
+        /// <summary>
+        /// Returns a Spec object with parameter <paramref name="val"/> 
+        /// available when accepting steps for the 'When' clause.
+        /// </summary>
+        /// <typeparam name="TVal"></typeparam>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        public PreconditionSpec<TSubject, TVal> Given<TVal>(TVal val)
+        {
+            var spec = new PreconditionSpec<TSubject, TVal>(this, val);
+            spec.OnAssert += (_, subject) => Assert(subject);
+
+            return spec;
         }
 
         /// <summary>
