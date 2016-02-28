@@ -21,9 +21,9 @@ namespace Calculator.Behaviours
         }
 
         /// <summary>
-        /// Specifies the theories on the behaviour of the Add() method
+        /// Specifies the theories on the Calculator's add behaviour.
         /// </summary>
-        private IEnumerable<Spec<Calculator>> AddMethodTheory
+        private IEnumerable<Spec<Calculator>> AddBehaviourInlineSpecs
         {
             get
             {
@@ -38,8 +38,7 @@ namespace Calculator.Behaviours
                         (data, result) => result.ShouldBe(data.ExpectedResult));
 
                 yield return "2. When adding two random integers a and b, the Calculator should yield the sum of a and b.".Spec<Calculator>()
-                    .Given(new
-                    {
+                    .Given(new {
                         A = _random.Next(int.MaxValue / 2),
                         B = _random.Next(int.MaxValue / 2)
                     })
@@ -51,13 +50,42 @@ namespace Calculator.Behaviours
             }
         }
 
+        ///// <summary>
+        ///// Specifies the theories on the Calculator's add behaviour.
+        ///// </summary>
+        //private IEnumerable<Spec<Calculator>> AddBehaviourSpecData
+        //{
+        //    get
+        //    {
+        //        yield return "1. When adding two identical integers a, the result should be (2 x a).".Spec<Calculator>()
+        //            .Given(new int[] { 21, 21, (2 * 21) });
+
+        //        var a = _random.Next(int.MaxValue / 2);
+        //        var b = _random.Next(int.MaxValue / 2);
+
+        //        yield return "2. When adding two random integers a and b, the result should yield the sum of a and b.".Spec<Calculator>()
+        //            .Given(new int[] { a, b, (a + b) });
+        //    }
+        //}
+
         /// <summary>
-        /// Asserts how Add() method should work based on the specified theories.
+        /// Asserts the Calculator's add behaviour.
         /// </summary>
         [Fact]
-        public void How_add_method_should_work()
+        public void AssertAddBehaviourWithInlineSpec()
         {
-            AddMethodTheory.Assert(_subject);
+            AddBehaviourInlineSpecs.Assert(_subject);
         }
+
+        //public void AssertAddBehaviourWithSpecData()
+        //{
+        //    var addBehaviourSpec = "Add behaviour spec".Spec<Calculator>()
+        //        .Given(new int[] { })
+        //        .When(
+        //            (calculator, data) => calculator.Add(data[0], data[1]))
+        //        .Then((data, result) => result.ShouldBe(data[2]));
+
+        //    //addBehaviourSpec.Assert(_subject, AddBehaviourSpecData);
+        //}
     }
 }
