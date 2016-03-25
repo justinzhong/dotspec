@@ -40,14 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Spec.cs" />
     <Compile Include="AssertionSpec.cs" />
+    <Compile Include="PreconditionWithDataSpec.cs" />
+    <Compile Include="Spec.cs" />
     <Compile Include="IAssertEventObserver.cs" />
-    <Compile Include="BehaviourSpec.cs" />
+    <Compile Include="AssertionWithDataSpec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PreconditionSpec.cs" />
     <Compile Include="SpecBase.cs" />
     <Compile Include="SpecExtension.cs" />
+    <Compile Include="SpecFactory.cs" />
     <Compile Include="SubjectContext.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

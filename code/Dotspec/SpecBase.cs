@@ -2,7 +2,6 @@
 
 namespace Dotspec
 {
-
     /// <summary>
     /// Represents a specification for a test scenario.
     /// </summary>
@@ -16,6 +15,8 @@ namespace Dotspec
 
         public string Scenario { get; protected set; }
 
+        protected readonly SpecFactory<TSubject> SpecFactory;
+
         /// <summary>
         /// Creates a new Spec test scenario.
         /// </summary>
@@ -27,12 +28,13 @@ namespace Dotspec
             if (string.IsNullOrEmpty(scenario)) throw new ArgumentException("String cannot be empty.", "scenario");
 
             Scenario = scenario;
+            SpecFactory = new SpecFactory<TSubject>();
         }
 
-        public void RegisterAssertion(EventHandler<TSubject> assertion)
+        public void RegisterAssertionCallback(EventHandler<TSubject> assertionCallback)
         {
-            AssertEvent += assertion;
-            UnsubscribeEvent += (_, subject) => AssertEvent -= assertion;
+            AssertEvent += assertionCallback;
+            UnsubscribeEvent += (_, subject) => AssertEvent -= assertionCallback;
         }
 
         protected void OnAssert(object source, TSubject subject)

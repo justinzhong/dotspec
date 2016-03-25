@@ -2,34 +2,39 @@
 
 namespace Dotspec
 {
-    public class AssertionSpec<TSubject, TData, TResult> : SpecBase<TSubject>
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TSubject"></typeparam>
+    public class AssertionSpec<TSubject, TResult> : SpecBase<TSubject>
         where TSubject : class
     {
-        private readonly TData _data;
-        private readonly Func<TResult> _resultFunc;
-        private Action<TData, TResult> _assertion;
+        private readonly Func<TSubject, TResult> _behaviour;
 
-        public AssertionSpec(string scenario, TData data, Func<TResult> resultFunc) : base(scenario)
+        /// <summary>
+        /// Sole constructor.
+        /// </summary>
+        /// <param name="scenario"></param>
+        /// <param name="input"></param>
+        public AssertionSpec(string scenario, Func<TSubject, TResult> behaviour) : base(scenario)
         {
-            _data = data;
-            _resultFunc = resultFunc;
+            if (behaviour == null) throw new ArgumentNullException("behaviour");
+
+            _behaviour = behaviour;
         }
 
-        public Spec<TSubject> Then(Action<TData, TResult> assertion)
+        /// <summary>
+        /// Records the assertion and returns a completed specification.
+        /// </summary>
+        /// <param name="assertion"></param>
+        /// <returns></returns>
+        public Spec<TSubject> Then(Action<TSubject, TResult> assertion)
         {
-            _assertion = assertion;
+            if (assertion == null) throw new ArgumentNullException("assertion");
 
-            var spec = new Spec<TSubject>(Scenario);
-            spec.RegisterAssertion(Assert);
+            Action<TSubject> assertionWrapper = (subject) => assertion(subject, _behaviour(subject));
 
-            return spec;
-        }
-
-        private void Assert(object sender, TSubject subject)
-        {
-            OnAssert(this, subject);
-
-            _assertion(_data, _resultFunc());
+            return SpecFactory.BuildFullSpec(Scenario, assertionWrapper, OnAssert);
         }
     }
 }
