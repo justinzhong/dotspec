@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotspec", "Dotspec.csproj",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{F841EB35-9193-424D-BA27-8A042F1BC68A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator", "..\Calculator\Calculator.csproj", "{93647646-0D52-4996-9B46-A68052DF5DC7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator", "..\Examples\Calculator\Calculator.csproj", "{93647646-0D52-4996-9B46-A68052DF5DC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator.Behaviours", "Calculator.Behaviours\Calculator.Behaviours.csproj", "{A7BC6CAC-2955-4B83-910E-916D9458C5DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator.Behaviours", "..\Examples\Calculator.Behaviours\Calculator.Behaviours.csproj", "{A7BC6CAC-2955-4B83-910E-916D9458C5DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
