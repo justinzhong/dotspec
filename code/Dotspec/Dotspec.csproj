@@ -50,7 +50,6 @@
     <Compile Include="SpecBase.cs" />
     <Compile Include="SpecExtension.cs" />
     <Compile Include="SpecFactory.cs" />
-    <Compile Include="SubjectContext.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
