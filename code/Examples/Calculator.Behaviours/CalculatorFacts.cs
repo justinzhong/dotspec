@@ -7,7 +7,8 @@ using Xunit;
 namespace Calculator.Behaviours
 {
     /// <summary>
-    /// Asserts all the facts about the behaviours of a Calculator object.
+    /// Asserts all the behaviours of a Calculator object match with 
+    /// specifications.
     /// </summary>
     public class CalculatorFacts
     {
@@ -21,7 +22,7 @@ namespace Calculator.Behaviours
         }
 
         /// <summary>
-        /// Specifies the theories on the Calculator's add behaviour.
+        /// Defines the test specifications for the Calculator's add behaviour.
         /// </summary>
         private IEnumerable<Spec<Calculator>> AddBehaviourInlineSpecs
         {
