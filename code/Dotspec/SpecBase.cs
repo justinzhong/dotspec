@@ -3,19 +3,19 @@
 namespace Dotspec
 {
     /// <summary>
-    /// Represents a specification for a test scenario.
+    /// Represents the base common functions of a test specification.
     /// </summary>
     /// <typeparam name="TSubject"></typeparam>
-    public abstract class SpecBase<TSubject> : IAssertEventObserver<TSubject>
+    public abstract class SpecBase<TSubject>
         where TSubject : class
     {
-        public event EventHandler<TSubject> AssertEvent;
+        private event EventHandler<TSubject> AssertEvent;
 
-        public event EventHandler<TSubject> UnsubscribeEvent;
-
-        public string Scenario { get; protected set; }
+        private event EventHandler<SpecExceptionArg<TSubject>> OnExceptionEvent;
 
         protected readonly SpecFactory<TSubject> SpecFactory;
+
+        public string Scenario { get; protected set; }
 
         /// <summary>
         /// Creates a new Spec test scenario.
@@ -34,7 +34,11 @@ namespace Dotspec
         public void RegisterAssertionCallback(EventHandler<TSubject> assertionCallback)
         {
             AssertEvent += assertionCallback;
-            UnsubscribeEvent += (_, subject) => AssertEvent -= assertionCallback;
+        }
+
+        public void RegisterOnExceptionCallback(EventHandler<SpecExceptionArg<TSubject>> onExceptionCallback)
+        {
+            OnExceptionEvent += onExceptionCallback;
         }
 
         protected void OnAssert(object source, TSubject subject)
@@ -43,18 +47,25 @@ namespace Dotspec
 
             if (eventHandler != null)
             {
-                eventHandler(source, subject);
+                try
+                {
+                    eventHandler(source, subject);
+                }
+                catch (Exception ex)
+                {
+                    if (OnExceptionEvent == null) throw;
+
+                    OnExceptionEvent(this, new SpecExceptionArg<TSubject> { Exception = ex, Subject = subject });
+                }
             }
         }
+    }
 
-        protected void OnUnsubscribe(object source, TSubject subject)
-        {
-            var eventHandler = UnsubscribeEvent;
+    public class SpecExceptionArg<TSubject>
+        where TSubject : class
+    {
+        public TSubject Subject { get; set; }
 
-            if (eventHandler != null)
-            {
-                eventHandler(source, subject);
-            }
-        }
+        public Exception Exception { get; set; }
     }
 }

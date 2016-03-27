@@ -2,7 +2,7 @@
 
 namespace Dotspec
 {
-    public class Spec<TSubject> : SpecBase<TSubject>
+    public class Spec<TSubject> : SpecBase<TSubject>, IAssertableSpec<TSubject>
         where TSubject : class
     {
         private readonly Action<TSubject> _assertion;

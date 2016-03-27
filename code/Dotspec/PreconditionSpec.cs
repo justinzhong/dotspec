@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Dotspec
 {
@@ -10,16 +9,11 @@ namespace Dotspec
     public class PreconditionSpec<TSubject> : SpecBase<TSubject>
         where TSubject : class
     {
-        private List<Action<TSubject>> _preconditions;
-
         /// <summary>
         /// Sole constructor.
         /// </summary>
         /// <param name="scenario"></param>
-        public PreconditionSpec(string scenario) : base(scenario)
-        {
-            _preconditions = new List<Action<TSubject>>();
-        }
+        public PreconditionSpec(string scenario) : base(scenario) { }
 
         /// <summary>
         /// Alias for Given().
@@ -34,14 +28,15 @@ namespace Dotspec
         }
 
         /// <summary>
-        /// Records an input for this test specification.
+        /// Transitions to PreconditionSpec object which accepts TData as one of
+        /// its type definitions.
         /// </summary>
         /// <typeparam name="TData"></typeparam>
         /// <param name="data"></param>
         /// <returns></returns>
         public PreconditionSpec<TSubject, TData> Given<TData>(TData data)
         {
-            return SpecFactory.BuildPreconditionSpec(Scenario, data, Assert);
+            return SpecFactory.BuildPreconditionWithDataSpec(Scenario, data, OnAssert);
         }
 
         /// <summary>
@@ -53,28 +48,20 @@ namespace Dotspec
         {
             if (precondition == null) throw new ArgumentNullException("precondition");
 
-            _preconditions.Add(precondition);
+            RegisterAssertionCallback((sender, subject) => precondition(subject));
 
             return this;
         }
 
         /// <summary>
-        /// Returns an assertable spec using the specified behaviour.
+        /// Transitions to AssertionSpec which captures the specified behaviour.
         /// </summary>
         /// <typeparam name="TResult"></typeparam>
         /// <param name="behaviour"></param>
         /// <returns></returns>
         public AssertionSpec<TSubject, TResult> When<TResult>(Func<TSubject, TResult> behaviour)
         {
-            return SpecFactory.BuildAssertionSpec(Scenario, behaviour, Assert);
-        }
-
-        private void Assert(object sender, TSubject subject)
-        {
-            // Bubble up the assert event to the parent.
-            OnAssert(this, subject);
-
-            _preconditions.ForEach(precondition => precondition(subject));
+            return SpecFactory.BuildAssertionSpec(Scenario, behaviour, OnAssert);
         }
     }
 }

@@ -24,13 +24,14 @@ namespace Dotspec
             return assertionSpec;
         }
 
-        public PreconditionSpec<TSubject, TData> BuildPreconditionSpec<TData>(
-            string scenario, TData data, EventHandler<TSubject> callback)
+        public ExceptionSpec<TSubject, TException> BuildExceptionSpec<TException>(
+            string scenario, string exceptionMessage, EventHandler<TSubject> callback)
+            where TException : Exception
         {
-            var preconditionSpec = new PreconditionSpec<TSubject, TData>(scenario, data);
-            preconditionSpec.RegisterAssertionCallback(callback);
+            var exceptionSpec = new ExceptionSpec<TSubject, TException>(scenario, exceptionMessage);
+            exceptionSpec.RegisterAssertionCallback(callback);
 
-            return preconditionSpec;
+            return exceptionSpec;
         }
 
         public Spec<TSubject> BuildFullSpec(string scenario, Action<TSubject> assertion, EventHandler<TSubject> callback)
@@ -39,6 +40,15 @@ namespace Dotspec
             spec.RegisterAssertionCallback(callback);
 
             return spec;
+        }
+
+        public PreconditionSpec<TSubject, TData> BuildPreconditionWithDataSpec<TData>(
+            string scenario, TData data, EventHandler<TSubject> callback)
+        {
+            var preconditionSpec = new PreconditionSpec<TSubject, TData>(scenario, data);
+            preconditionSpec.RegisterAssertionCallback(callback);
+
+            return preconditionSpec;
         }
     }
 }

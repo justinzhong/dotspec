@@ -2,7 +2,7 @@
 
 namespace Dotspec
 {
-    public class AssertionSpec<TSubject, TData, TResult> : SpecBase<TSubject>
+    public class AssertionSpec<TSubject, TData, TResult> : AssertionSpecBase<TSubject>
         where TSubject : class
     {
         private readonly TData _data;

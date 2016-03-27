@@ -24,8 +24,8 @@ namespace Dotspec
         }
 
         /// <summary>
-        /// Given a behaviour, returns the assertion step of the test 
-        /// specification.
+        /// Transitions to AssertionSpec which accepts TData as one of its type
+        /// definitions.
         /// </summary>
         /// <typeparam name="TResult"></typeparam>
         /// <param name="behaviour"></param>
