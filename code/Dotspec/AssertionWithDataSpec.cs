@@ -23,6 +23,16 @@ namespace Dotspec
             });
         }
 
+        public Spec<TSubject> Then(Action<TData, TResult> assertion)
+        {
+            if (assertion == null) throw new ArgumentNullException("assertion");
+
+            // Registers the specified assertion to the OnAssert event chain.
+            RegisterAssertionCallback((source, subject) => RegisterResultCallback(result => assertion(_data, result)));
+
+            return SpecFactory.BuildFullSpec(Scenario, OnAssert);
+        }
+
         public Spec<TSubject> Then(Action<TSubject, TData, TResult> assertion)
         {
             if (assertion == null) throw new ArgumentNullException("assertion");
