@@ -30,23 +30,22 @@ namespace Calculator.Behaviours
             get
             {
                 yield return "1. When adding two identical integers a, the result should be (2 x a).".Spec<Calculator>()
-                    .Given(new
-                    {
-                        Number = 21,
-                        ExpectedResult = (2 * 21)
-                    })
-                    .When(
-                        (calculator, data) => calculator.Add(data.Number, data.Number))
-                    .Then(
-                        (data, result) => result.ShouldBe(data.ExpectedResult));
-
-                yield return "2. When adding two random integers a and b, the Calculator should yield the sum of a and b.".Spec<Calculator>()
                     .Given(_random.Next(int.MaxValue / 2) - 1)
                     .When(
                         (calculator, number) => calculator.Add(number, number)
                     )
                     .Then(
-                        (number, result) => result.ShouldBe(number * 2));
+                        (number, result) => result.ShouldBe(2 * number));
+
+                yield return "2. When adding two random integers x and y, the Calculator should yield the sum of x and y.".Spec<Calculator>()
+                    .Given(new {
+                        X = _random.Next(int.MaxValue / 2) - 1,
+                        Y = _random.Next(int.MaxValue / 2) - 1})
+                    .When(
+                        (calculator, number) => calculator.Add(number.X, number.Y)
+                    )
+                    .Then(
+                        (number, result) => result.ShouldBe(number.X + number.Y));
 
                 yield return "3. When adding two maximum integers, the Calculator should throw an arithmetic overflow exception.".Spec<Calculator>()
                     .Given(int.MaxValue)
