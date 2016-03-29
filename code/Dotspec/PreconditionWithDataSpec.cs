@@ -16,11 +16,13 @@ namespace Dotspec
         /// </summary>
         /// <param name="scenario"></param>
         /// <param name="data"></param>
-        public PreconditionSpec(string scenario, TData data) : base(scenario)
+        public PreconditionSpec(string scenario, TData data, EventHandler<TSubject> callback = null) : base(scenario)
         {
             if (data == null) throw new ArgumentNullException("data");
 
             _data = data;
+
+            if (callback != null) RegisterAssertionCallback(callback);
         }
 
         /// <summary>

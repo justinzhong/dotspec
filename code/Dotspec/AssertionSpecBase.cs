@@ -11,10 +11,17 @@ namespace Dotspec
     {
         public AssertionSpecBase(string scenario) : base(scenario) { }
 
-        public ExceptionSpec<TSubject, TException> Throws<TException>(string exceptionMessage)
+        /// <summary>
+        /// Transitions to full spec object to assert the specified exception 
+        /// type with the optional exception message.
+        /// </summary>
+        /// <typeparam name="TException"></typeparam>
+        /// <param name="exceptionMessage"></param>
+        /// <returns></returns>
+        public Spec<TSubject> Throws<TException>(string exceptionMessage = null)
             where TException : Exception
         {
-            return SpecFactory.BuildExceptionSpec<TException>(Scenario, exceptionMessage, OnAssert);
+            return SpecFactory.BuildFullSpec<TException>(Scenario, exceptionMessage, OnAssert);
         }
     }
 }

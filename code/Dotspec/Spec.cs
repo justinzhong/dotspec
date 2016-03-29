@@ -5,11 +5,9 @@ namespace Dotspec
     public class Spec<TSubject> : SpecBase<TSubject>, IAssertableSpec<TSubject>
         where TSubject : class
     {
-        private readonly Action<TSubject> _assertion;
-
-        public Spec(string scenario, Action<TSubject> assertion) : base(scenario)
+        public Spec(string scenario, EventHandler<TSubject> assertionCallback) : base(scenario)
         {
-            _assertion = assertion;
+            RegisterAssertionCallback(assertionCallback);
         }
 
         public void Assert(TSubject subject)
@@ -18,9 +16,6 @@ namespace Dotspec
 
             // Invokes all previously registered assertion callbacks.
             OnAssert(this, subject);
-
-            // Perform the actual assertion on the test subject.
-            _assertion(subject);
         }
     }
 }

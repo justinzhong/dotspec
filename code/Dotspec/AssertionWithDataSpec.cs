@@ -6,21 +6,41 @@ namespace Dotspec
         where TSubject : class
     {
         private readonly TData _data;
-        private readonly Func<TSubject, TData, TResult> _behaviour;
+        private EventHandler<TResult> ResultEvent;
 
-        public AssertionSpec(string scenario, TData val, Func<TSubject, TData, TResult> behaviour) : base(scenario)
+        public AssertionSpec(string scenario, TData val, Func<TSubject, TData, TResult> behaviour, EventHandler<TSubject> callback = null) : base(scenario)
         {
             _data = val;
-            _behaviour = behaviour;
+
+            if (callback != null) RegisterAssertionCallback(callback);
+
+            RegisterAssertionCallback((_, subject) =>
+            {
+                var result = behaviour(subject, _data);
+                var resultEventHandler = ResultEvent;
+
+                if (resultEventHandler != null) resultEventHandler(this, result);
+            });
         }
 
-        public Spec<TSubject> Then(Action<TData, TResult> assertion)
+        public Spec<TSubject> Then(Action<TSubject, TData, TResult> assertion)
         {
             if (assertion == null) throw new ArgumentNullException("assertion");
 
-            Action<TSubject> assertionWrapper = (subject) => assertion(_data, _behaviour(subject, _data));
+            // Registers the specified assertion to the OnAssert event chain.
+            RegisterAssertionCallback((source, subject) => RegisterResultCallback(result => assertion(subject, _data, result)));
 
-            return SpecFactory.BuildFullSpec(Scenario, assertionWrapper, OnAssert);
+            return SpecFactory.BuildFullSpec(Scenario, OnAssert);
+        }
+
+        /// <summary>
+        /// Registers a callback to the ResultEvent to capture and use the 
+        /// result in the assertion.
+        /// </summary>
+        /// <param name="resultAssertion"></param>
+        protected void RegisterResultCallback(Action<TResult> resultAssertion)
+        {
+            ResultEvent += (_, result) => resultAssertion(result);
         }
     }
 }

@@ -9,18 +9,26 @@ namespace Dotspec
     public class AssertionSpec<TSubject, TResult> : SpecBase<TSubject>
         where TSubject : class
     {
-        private readonly Func<TSubject, TResult> _behaviour;
+        private EventHandler<TResult> ResultEvent;
 
         /// <summary>
         /// Sole constructor.
         /// </summary>
         /// <param name="scenario"></param>
         /// <param name="input"></param>
-        public AssertionSpec(string scenario, Func<TSubject, TResult> behaviour) : base(scenario)
+        public AssertionSpec(string scenario, Func<TSubject, TResult> behaviour, EventHandler<TSubject> callback = null) : base(scenario)
         {
             if (behaviour == null) throw new ArgumentNullException("behaviour");
 
-            _behaviour = behaviour;
+            if (callback != null) RegisterAssertionCallback(callback);
+
+            RegisterAssertionCallback((_, subject) =>
+            {
+                var result = behaviour(subject);
+                var resultEventHandler = ResultEvent;
+
+                if (resultEventHandler != null) resultEventHandler(this, result);
+            });
         }
 
         /// <summary>
@@ -32,9 +40,20 @@ namespace Dotspec
         {
             if (assertion == null) throw new ArgumentNullException("assertion");
 
-            Action<TSubject> assertionWrapper = (subject) => assertion(subject, _behaviour(subject));
+            // Registers the specified assertion to the OnAssert event chain.
+            RegisterAssertionCallback((source, subject) => RegisterResultCallback(result => assertion(subject, result)));
 
-            return SpecFactory.BuildFullSpec(Scenario, assertionWrapper, OnAssert);
+            return SpecFactory.BuildFullSpec(Scenario, OnAssert);
+        }
+
+        /// <summary>
+        /// Registers a callback to the ResultEvent to capture and use the 
+        /// result in the assertion.
+        /// </summary>
+        /// <param name="resultAssertion"></param>
+        protected void RegisterResultCallback(Action<TResult> resultAssertion)
+        {
+            ResultEvent += (_, result) => resultAssertion(result);
         }
     }
 }
