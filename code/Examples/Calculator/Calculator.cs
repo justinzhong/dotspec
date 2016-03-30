@@ -3,7 +3,7 @@
     /// <summary>
     /// A naive implementation of a Calculator class with a single Add() method.
     /// </summary>
-    public class Calculator
+    public class Calculator : ICalculator
     {
         /// <summary>
         /// Caclulates the sum of two integers.

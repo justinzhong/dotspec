@@ -3,10 +3,11 @@
 namespace Dotspec
 {
     /// <summary>
-    /// Records the preconditions and input for a test specification.
+    /// Strong types the input data allowing explicit type to be specified in
+    /// test specifications.
     /// </summary>
     /// <typeparam name="TSubject"></typeparam>
-    public class PreconditionSpec<TSubject, TData> : PreconditionSpec<TSubject>
+    public class PreconditionSpec<TSubject, TData> : PreconditionAliasSpec<TSubject>
         where TSubject : class
     {
         private readonly TData _data;
@@ -23,6 +24,15 @@ namespace Dotspec
             _data = data;
 
             if (callback != null) RegisterAssertionCallback(callback);
+        }
+
+        public PreconditionSpec<TSubject, TData> And(Action<TData> precondition)
+        {
+            if (precondition == null) throw new ArgumentNullException("precondition");
+
+            RegisterAssertionCallback((sender, subject) => precondition(_data));
+
+            return this;
         }
 
         /// <summary>

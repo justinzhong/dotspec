@@ -2,7 +2,6 @@
 using Shouldly;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace Calculator.Behaviours
@@ -60,7 +59,7 @@ namespace Calculator.Behaviours
         [Fact]
         public void AssertAddBehaviourWithInlineSpec()
         {
-            AddBehaviourInlineSpecs.Last().Assert(_subject);
+            AddBehaviourInlineSpecs.Assert(_subject);
         }
     }
 }

@@ -10,6 +10,13 @@ namespace Dotspec
             RegisterAssertionCallback(assertionCallback);
         }
 
+        public Spec<TSubject> And(Action<TSubject> assertion)
+        {
+            RegisterAssertionCallback((_, subject) => assertion(subject));
+
+            return this;
+        }
+
         public void Assert(TSubject subject)
         {
             if (subject == null) throw new ArgumentNullException("subject");

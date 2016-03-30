@@ -49,6 +49,7 @@
     <Compile Include="ExceptionAssertionSpec.cs" />
     <Compile Include="ExceptionSpec.cs" />
     <Compile Include="IAssertableSpec.cs" />
+    <Compile Include="PreconditionAliasSpec.cs" />
     <Compile Include="PreconditionWithDataSpec.cs" />
     <Compile Include="Spec.cs" />
     <Compile Include="AssertionWithDataSpec.cs" />
@@ -57,6 +58,8 @@
     <Compile Include="SpecBase.cs" />
     <Compile Include="SpecExtension.cs" />
     <Compile Include="SpecFactory.cs" />
+    <Compile Include="Specs.cs" />
+    <Compile Include="SpecWithData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

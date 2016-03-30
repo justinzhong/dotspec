@@ -40,7 +40,12 @@ namespace Dotspec
             return new Spec<TSubject>(scenario, callback);
         }
 
-        public PreconditionSpec<TSubject, TData> BuildPreconditionWithDataSpec<TData>(
+        public Spec<TSubject, TData> BuildFullSpec<TData>(string scenario, EventHandler<TSubject> callback, TData data)
+        {
+            return new Spec<TSubject, TData>(scenario, callback, data);
+        }
+
+        public PreconditionSpec<TSubject, TData> BuildPreconditionAliasWithDataSpec<TData>(
             string scenario, TData data, EventHandler<TSubject> callback)
         {
             return new PreconditionSpec<TSubject, TData>(scenario, data, callback);
