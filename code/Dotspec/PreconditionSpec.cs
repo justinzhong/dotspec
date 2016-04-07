@@ -3,7 +3,7 @@
 namespace Dotspec
 {
     /// <summary>
-    /// Records the preconditions and input for a test specification.
+    /// Provides the Given() and When() test specifications.
     /// </summary>
     /// <typeparam name="TSubject"></typeparam>
     public class PreconditionSpec<TSubject> : SpecBase<TSubject>
@@ -16,8 +16,8 @@ namespace Dotspec
         public PreconditionSpec(string scenario) : base(scenario) { }
 
         /// <summary>
-        /// Transitions to PreconditionSpec object which accepts TData as one of
-        /// its type definitions.
+        /// Captures <paramref name="data"/> to be used in subsequent steps,
+        /// e.g. 'when', 'then'.
         /// </summary>
         /// <typeparam name="TData"></typeparam>
         /// <param name="data"></param>
@@ -27,11 +27,28 @@ namespace Dotspec
             return SpecFactory.BuildPreconditionAliasWithDataSpec(Scenario, data, OnAssert);
         }
 
+        /// <summary>
+        /// Takes <paramref name="data"/> and bind with 
+        /// <paramref name="dataTemplate"/> to create the final data object to
+        /// be used in subsequent steps,
+        /// e.g. 'when', 'then'.
+        /// </summary>
+        /// <typeparam name="TData"></typeparam>
+        /// <typeparam name="TData2"></typeparam>
+        /// <param name="data"></param>
+        /// <param name="dataTemplate"></param>
+        /// <returns></returns>
         public PreconditionSpec<TSubject, TData2> Given<TData, TData2>(TData data, Func<TData, TData2> dataTemplate)
         {
             return SpecFactory.BuildPreconditionAliasWithDataSpec(Scenario, dataTemplate(data), OnAssert);
         }
 
+        /// <summary>
+        /// Captures <paramref name="precondition"/> delegate to be evaluated at
+        /// the time of asserting this test specification.
+        /// </summary>
+        /// <param name="precondition"></param>
+        /// <returns></returns>
         public PreconditionSpec<TSubject> Given(Action precondition)
         {
             if (precondition == null) throw new ArgumentNullException("precondition");
@@ -42,7 +59,8 @@ namespace Dotspec
         }
 
         /// <summary>
-        /// Records a precondition for this test specification.
+        /// Captures <paramref name="precondition"/> delegate to be evaluated at
+        /// the time of asserting this test specification.
         /// </summary>
         /// <param name="precondition"></param>
         /// <returns></returns>
@@ -56,7 +74,8 @@ namespace Dotspec
         }
 
         /// <summary>
-        /// Transitions to AssertionSpec which captures the specified behaviour.
+        /// Captures the <paramref name="behaviour"/> delegate which yields the
+        /// result type TResult and start provide Then() test specification steps.
         /// </summary>
         /// <typeparam name="TResult"></typeparam>
         /// <param name="behaviour"></param>

@@ -56,9 +56,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PreconditionSpec.cs" />
     <Compile Include="SpecBase.cs" />
+    <Compile Include="SpecExceptionArg.cs" />
     <Compile Include="SpecExtension.cs" />
     <Compile Include="SpecFactory.cs" />
-    <Compile Include="Specs.cs" />
     <Compile Include="SpecWithData.cs" />
   </ItemGroup>
   <ItemGroup>

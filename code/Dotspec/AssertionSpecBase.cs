@@ -3,7 +3,8 @@
 namespace Dotspec
 {
     /// <summary>
-    /// 
+    /// Base class for AssertionSpec implementations which provides the Then() 
+    /// test specification.
     /// </summary>
     /// <typeparam name="TSubject"></typeparam>
     public abstract class AssertionSpecBase<TSubject> : SpecBase<TSubject>

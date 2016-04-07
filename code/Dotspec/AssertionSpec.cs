@@ -3,7 +3,7 @@
 namespace Dotspec
 {
     /// <summary>
-    /// 
+    /// Provides the Then() test specification.
     /// </summary>
     /// <typeparam name="TSubject"></typeparam>
     public class AssertionSpec<TSubject, TResult> : SpecBase<TSubject>

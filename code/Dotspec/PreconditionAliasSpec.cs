@@ -17,8 +17,8 @@ namespace Dotspec
         public PreconditionAliasSpec(string scenario) : base(scenario) { }
 
         /// <summary>
-        /// Transitions to PreconditionSpec object which accepts TData as one of
-        /// its type definitions.
+        /// Captures the <paramref name="data"/> parameter to make available for
+        /// subsequent precondition or behaviour specifications.
         /// </summary>
         /// <typeparam name="TData"></typeparam>
         /// <param name="data"></param>
@@ -28,6 +28,12 @@ namespace Dotspec
             return SpecFactory.BuildPreconditionAliasWithDataSpec(Scenario, data, OnAssert);
         }
 
+        /// <summary>
+        /// Adds the <paramref name="precondition"/> to the list of assertion
+        /// callbacks.
+        /// </summary>
+        /// <param name="precondition"></param>
+        /// <returns></returns>
         public PreconditionAliasSpec<TSubject> And(Action precondition)
         {
             if (precondition == null) throw new ArgumentNullException("precondition");
@@ -38,7 +44,8 @@ namespace Dotspec
         }
 
         /// <summary>
-        /// Records a precondition for this test specification.
+        /// Adds the <paramref name="precondition"/> to the list of assertion
+        /// callbacks.
         /// </summary>
         /// <param name="precondition"></param>
         /// <returns></returns>
@@ -52,7 +59,8 @@ namespace Dotspec
         }
 
         /// <summary>
-        /// Transitions to AssertionSpec which captures the specified behaviour.
+        /// Records the <paramref name="behaviour"/> delegate and transitions to
+        /// assertion test specification steps.
         /// </summary>
         /// <typeparam name="TResult"></typeparam>
         /// <param name="behaviour"></param>

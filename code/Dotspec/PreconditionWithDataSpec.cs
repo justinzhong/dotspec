@@ -3,8 +3,8 @@
 namespace Dotspec
 {
     /// <summary>
-    /// Strong types the input data allowing explicit type to be specified in
-    /// test specifications.
+    /// Provides the Given() and When() test specification providing a TData
+    /// strong typed parameter to be used in those steps.
     /// </summary>
     /// <typeparam name="TSubject"></typeparam>
     public class PreconditionSpec<TSubject, TData> : PreconditionAliasSpec<TSubject>
@@ -26,6 +26,12 @@ namespace Dotspec
             if (callback != null) RegisterAssertionCallback(callback);
         }
 
+        /// <summary>
+        /// Captures <paramref name="precondition"/> delegate to be evaluated at
+        /// the time of asserting this test specification.
+        /// </summary>
+        /// <param name="precondition"></param>
+        /// <returns></returns>
         public PreconditionSpec<TSubject, TData> And(Action<TData> precondition)
         {
             if (precondition == null) throw new ArgumentNullException("precondition");
@@ -36,8 +42,8 @@ namespace Dotspec
         }
 
         /// <summary>
-        /// Transitions to AssertionSpec which accepts TData as one of its type
-        /// definitions.
+        /// Captures the <paramref name="behaviour"/> delegate which yields the
+        /// result type TResult and start provide Then() test specification steps.
         /// </summary>
         /// <typeparam name="TResult"></typeparam>
         /// <param name="behaviour"></param>
