@@ -8,11 +8,10 @@ namespace Dotspec
     /// <typeparam name="TSubject"></typeparam>
     /// <typeparam name="TData"></typeparam>
     /// <typeparam name="TResult"></typeparam>
-    public class AssertionSpec<TSubject, TData, TResult> : AssertionSpecBase<TSubject>
+    public class AssertionSpec<TSubject, TData, TResult> : AssertionSpec<TSubject, TResult>
         where TSubject : class
     {
         private readonly TData _data;
-        private EventHandler<TResult> ResultEvent;
 
         /// <summary>
         /// Sole constructor
@@ -68,16 +67,6 @@ namespace Dotspec
             RegisterAssertionCallback((source, subject) => RegisterResultCallback(result => assertion(subject, _data, result)));
 
             return SpecFactory.BuildFullSpec(Scenario, OnAssert, _data);
-        }
-
-        /// <summary>
-        /// Registers a callback to the ResultEvent to capture and use the 
-        /// result in the assertion.
-        /// </summary>
-        /// <param name="resultAssertion"></param>
-        protected void RegisterResultCallback(Action<TResult> resultAssertion)
-        {
-            ResultEvent += (_, result) => resultAssertion(result);
         }
     }
 }

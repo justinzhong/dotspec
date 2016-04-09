@@ -9,10 +9,18 @@ namespace Dotspec
     public class AssertionSpec<TSubject, TResult> : AssertionSpecBase<TSubject>
         where TSubject : class
     {
-        private EventHandler<TResult> ResultEvent;
+        protected EventHandler<TResult> ResultEvent;
 
         /// <summary>
-        /// Sole constructor.
+        /// Records the scenario for this test specification.
+        /// </summary>
+        /// <param name="scenario"></param>
+        public AssertionSpec(string scenario) : base(scenario) { }
+
+        /// <summary>
+        /// In addition to recording the scenario, register the behaviour to be 
+        /// executed during assertion and register any callbacks for the 
+        /// OnAssert() event chain.
         /// </summary>
         /// <param name="scenario"></param>
         /// <param name="input"></param>
