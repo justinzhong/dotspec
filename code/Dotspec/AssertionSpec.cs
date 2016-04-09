@@ -6,7 +6,7 @@ namespace Dotspec
     /// Provides the Then() test specification.
     /// </summary>
     /// <typeparam name="TSubject"></typeparam>
-    public class AssertionSpec<TSubject, TResult> : SpecBase<TSubject>
+    public class AssertionSpec<TSubject, TResult> : AssertionSpecBase<TSubject>
         where TSubject : class
     {
         private EventHandler<TResult> ResultEvent;

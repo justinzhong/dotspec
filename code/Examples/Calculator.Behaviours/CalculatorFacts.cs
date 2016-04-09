@@ -3,7 +3,6 @@ using Shouldly;
 using System;
 using System.Collections.Generic;
 using Xunit;
-using Xunit.Extensions;
 
 namespace Calculator.Behaviours
 {

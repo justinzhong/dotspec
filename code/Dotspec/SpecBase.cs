@@ -37,7 +37,7 @@ namespace Dotspec
         /// which its registered.
         /// </summary>
         /// <param name="assertionCallback"></param>
-        public void RegisterAssertionCallback(EventHandler<TSubject> assertionCallback)
+        protected void RegisterAssertionCallback(EventHandler<TSubject> assertionCallback)
         {
             AssertEvent += assertionCallback;
         }
@@ -47,7 +47,7 @@ namespace Dotspec
         /// during the assertion.
         /// </summary>
         /// <param name="onExceptionCallback"></param>
-        public void RegisterOnExceptionCallback(EventHandler<SpecExceptionArg<TSubject>> onExceptionCallback)
+        protected void RegisterOnExceptionCallback(EventHandler<SpecExceptionArg<TSubject>> onExceptionCallback)
         {
             OnExceptionEvent += onExceptionCallback;
         }

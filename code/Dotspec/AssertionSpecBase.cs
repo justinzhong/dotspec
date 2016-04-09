@@ -13,8 +13,9 @@ namespace Dotspec
         public AssertionSpecBase(string scenario) : base(scenario) { }
 
         /// <summary>
-        /// Transitions to full spec object to assert the specified exception 
-        /// type with the optional exception message.
+        /// Compares the <paramref name="exceptionMessage"/> with the actual 
+        /// message contained in the exception that is thrown during the 
+        /// assertion of this test specification.
         /// </summary>
         /// <typeparam name="TException"></typeparam>
         /// <param name="exceptionMessage"></param>
@@ -23,6 +24,36 @@ namespace Dotspec
             where TException : Exception
         {
             return SpecFactory.BuildFullSpec<TException>(Scenario, exceptionMessage, OnAssert);
+        }
+
+        /// <summary>
+        /// Evaluates the <paramref name="assertion"/> with the actual 
+        /// exception that is thrown during the assertion of this test 
+        /// specification.
+        /// </summary>
+        /// <typeparam name="TException"></typeparam>
+        /// <param name="assertion"></param>
+        /// <returns></returns>
+        public Spec<TSubject> Throws<TException>(Action<TException> assertion)
+            where TException : Exception
+        {
+            Action<TSubject, TException> assertionWrapper = (_, exception) => assertion(exception);
+
+            return Throws(assertionWrapper);
+        }
+
+        /// <summary>
+        /// Evaluates the <paramref name="assertion"/> with the test subject
+        /// and the actual exception that is thrown during the assertion of this
+        /// test specification.
+        /// </summary>
+        /// <typeparam name="TException"></typeparam>
+        /// <param name="assertion"></param>
+        /// <returns></returns>
+        public Spec<TSubject> Throws<TException>(Action<TSubject, TException> assertion)
+            where TException : Exception
+        {
+            return SpecFactory.BuildFullSpec(Scenario, assertion, OnAssert);
         }
     }
 }
