@@ -10,6 +10,10 @@ namespace Dotspec
     public abstract class AssertionSpecBase<TSubject> : SpecBase<TSubject>
         where TSubject : class
     {
+        /// <summary>
+        /// Base constructor.
+        /// </summary>
+        /// <param name="scenario"></param>
         public AssertionSpecBase(string scenario) : base(scenario) { }
 
         /// <summary>

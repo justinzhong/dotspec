@@ -80,7 +80,18 @@ namespace Dotspec
         /// <typeparam name="TResult"></typeparam>
         /// <param name="behaviour"></param>
         /// <returns></returns>
-        public AssertionSpec<TSubject, TResult> When<TResult>(Func<TSubject, TResult> behaviour)
+        public AssertionSpecWithResult<TSubject, TResult> When<TResult>(Func<TSubject, TResult> behaviour)
+        {
+            return SpecFactory.BuildAssertionSpec(Scenario, behaviour, OnAssert);
+        }
+
+        /// <summary>
+        /// Registers the <paramref name="behaviour"/> action into the specification
+        /// pipeline for the 'When' step.
+        /// </summary>
+        /// <param name="behaviour"></param>
+        /// <returns></returns>
+        public AssertionSpec<TSubject> When(Action<TSubject> behaviour)
         {
             return SpecFactory.BuildAssertionSpec(Scenario, behaviour, OnAssert);
         }

@@ -65,7 +65,7 @@ namespace Dotspec
         /// <typeparam name="TResult"></typeparam>
         /// <param name="behaviour"></param>
         /// <returns></returns>
-        public AssertionSpec<TSubject, TResult> When<TResult>(Func<TSubject, TResult> behaviour)
+        public AssertionSpecWithResult<TSubject, TResult> When<TResult>(Func<TSubject, TResult> behaviour)
         {
             return SpecFactory.BuildAssertionSpec(Scenario, behaviour, OnAssert);
         }

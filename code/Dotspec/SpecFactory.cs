@@ -11,6 +11,19 @@ namespace Dotspec
         where TSubject : class
     {
         /// <summary>
+        /// Returns an AssertionSpec instance.
+        /// </summary>
+        /// <param name="scenario"></param>
+        /// <param name="behaviour"></param>
+        /// <param name="callback"></param>
+        /// <returns></returns>
+        public AssertionSpec<TSubject> BuildAssertionSpec(
+            string scenario, Action<TSubject> behaviour, EventHandler<TSubject> callback)
+        {
+            return new AssertionSpec<TSubject>(scenario, behaviour, callback);
+        }
+
+        /// <summary>
         /// Builds an assertion spec for recording:
         /// 1) Behaviour actions via When() specifications
         /// 2) Assertion actions via Then() specifications
@@ -20,10 +33,10 @@ namespace Dotspec
         /// <param name="behaviour"></param>
         /// <param name="callback"></param>
         /// <returns></returns>
-        public AssertionSpec<TSubject, TResult> BuildAssertionSpec<TResult>(
+        public AssertionSpecWithResult<TSubject, TResult> BuildAssertionSpec<TResult>(
             string scenario, Func<TSubject, TResult> behaviour, EventHandler<TSubject> callback)
         {
-            return new AssertionSpec<TSubject, TResult>(scenario, behaviour, callback);
+            return new AssertionSpecWithResult<TSubject, TResult>(scenario, behaviour, callback);
         }
 
         /// <summary>

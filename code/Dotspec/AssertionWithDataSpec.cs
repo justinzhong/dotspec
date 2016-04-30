@@ -8,7 +8,7 @@ namespace Dotspec
     /// <typeparam name="TSubject"></typeparam>
     /// <typeparam name="TData"></typeparam>
     /// <typeparam name="TResult"></typeparam>
-    public class AssertionSpec<TSubject, TData, TResult> : AssertionSpec<TSubject, TResult>
+    public class AssertionSpec<TSubject, TData, TResult> : AssertionSpecWithResult<TSubject, TResult>
         where TSubject : class
     {
         private readonly TData _data;

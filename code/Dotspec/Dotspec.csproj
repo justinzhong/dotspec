@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Dotspec.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -45,8 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssertionSpecBase.cs" />
     <Compile Include="AssertionSpec.cs" />
+    <Compile Include="AssertionSpecBase.cs" />
+    <Compile Include="AssertionSpecWithResult.cs" />
     <Compile Include="ExceptionAssertionSpec.cs" />
     <Compile Include="ExceptionSpec.cs" />
     <Compile Include="IAssertableSpec.cs" />
