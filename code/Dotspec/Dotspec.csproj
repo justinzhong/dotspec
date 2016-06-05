@@ -46,23 +46,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssertionSpec.cs" />
-    <Compile Include="AssertionSpecBase.cs" />
-    <Compile Include="AssertionSpecWithResult.cs" />
-    <Compile Include="ExceptionAssertionSpec.cs" />
-    <Compile Include="ExceptionSpec.cs" />
-    <Compile Include="IAssertableSpec.cs" />
-    <Compile Include="PreconditionAliasSpec.cs" />
-    <Compile Include="PreconditionWithDataSpec.cs" />
-    <Compile Include="Spec.cs" />
-    <Compile Include="AssertionWithDataSpec.cs" />
+    <Compile Include="DotspecExtension.cs" />
+    <Compile Include="IAssertCallback.cs" />
+    <Compile Include="Dotspec.cs" />
+    <Compile Include="IAssertionSpec.cs" />
+    <Compile Include="IBehaviourJunctionSpec.cs" />
+    <Compile Include="IPreconditionSpec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PreconditionSpec.cs" />
-    <Compile Include="SpecBase.cs" />
-    <Compile Include="SpecExceptionArg.cs" />
-    <Compile Include="SpecExtension.cs" />
-    <Compile Include="SpecFactory.cs" />
-    <Compile Include="SpecWithData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
