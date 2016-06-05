@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DotspecExtension.cs" />
-    <Compile Include="IAssertCallback.cs" />
     <Compile Include="Dotspec.cs" />
     <Compile Include="IAssertionSpec.cs" />
     <Compile Include="IBehaviourJunctionSpec.cs" />

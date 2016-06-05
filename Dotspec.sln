@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotspec", "Dotspec.csproj", "{DF783172-1A8B-43BE-8BA0-CE6DAD5B05AA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A1E79E7B-5FBB-4FC8-9B5A-2B0E8EDBC3DE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{F841EB35-9193-424D-BA27-8A042F1BC68A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{652BF440-10F2-469A-8152-6A7AA3C3BA79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator", "..\Examples\Calculator\Calculator.csproj", "{93647646-0D52-4996-9B46-A68052DF5DC7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{947177B0-FDEE-4A44-951F-8506DA3C30A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotspec", "src\Dotspec\Dotspec.csproj", "{DF783172-1A8B-43BE-8BA0-CE6DAD5B05AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,15 +21,11 @@ Global
 		{DF783172-1A8B-43BE-8BA0-CE6DAD5B05AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF783172-1A8B-43BE-8BA0-CE6DAD5B05AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF783172-1A8B-43BE-8BA0-CE6DAD5B05AA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93647646-0D52-4996-9B46-A68052DF5DC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93647646-0D52-4996-9B46-A68052DF5DC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93647646-0D52-4996-9B46-A68052DF5DC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93647646-0D52-4996-9B46-A68052DF5DC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{93647646-0D52-4996-9B46-A68052DF5DC7} = {F841EB35-9193-424D-BA27-8A042F1BC68A}
+		{DF783172-1A8B-43BE-8BA0-CE6DAD5B05AA} = {A1E79E7B-5FBB-4FC8-9B5A-2B0E8EDBC3DE}
 	EndGlobalSection
 EndGlobal
