@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{947177
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotspec", "src\Dotspec\Dotspec.csproj", "{DF783172-1A8B-43BE-8BA0-CE6DAD5B05AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotspec.Behaviour", "test\Dotspec.Behaviour\Dotspec.Behaviour.csproj", "{2B728872-3215-46D9-99D0-0F785E38069D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,11 +23,16 @@ Global
 		{DF783172-1A8B-43BE-8BA0-CE6DAD5B05AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF783172-1A8B-43BE-8BA0-CE6DAD5B05AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF783172-1A8B-43BE-8BA0-CE6DAD5B05AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B728872-3215-46D9-99D0-0F785E38069D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B728872-3215-46D9-99D0-0F785E38069D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B728872-3215-46D9-99D0-0F785E38069D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B728872-3215-46D9-99D0-0F785E38069D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DF783172-1A8B-43BE-8BA0-CE6DAD5B05AA} = {A1E79E7B-5FBB-4FC8-9B5A-2B0E8EDBC3DE}
+		{2B728872-3215-46D9-99D0-0F785E38069D} = {652BF440-10F2-469A-8152-6A7AA3C3BA79}
 	EndGlobalSection
 EndGlobal

@@ -46,10 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dotspec%27TData.cs" />
+    <Compile Include="IAdditionalPreconditionSpec.cs" />
+    <Compile Include="IAssertionSpec%27TData.cs" />
+    <Compile Include="IBehaviourSpec%27TData.cs" />
+    <Compile Include="IDotspec.cs" />
     <Compile Include="DotspecExtension.cs" />
     <Compile Include="Dotspec.cs" />
     <Compile Include="IAssertionSpec.cs" />
-    <Compile Include="IBehaviourJunctionSpec.cs" />
+    <Compile Include="IBehaviourSpec.cs" />
+    <Compile Include="IDotspec%27TData.cs" />
     <Compile Include="IPreconditionSpec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -3,10 +3,10 @@ using Shouldly;
 
 namespace Dotspec
 {
-    public class Dotspec<TSubject> : IPreconditionSpec<TSubject>, IBehaviourJunctionSpec<TSubject>, IAssertionSpec<TSubject>
+    public class Dotspec<TSubject> : IDotspec<TSubject>
         where TSubject : class
     {
-        private string Scenario { get; }
+        protected string Scenario { get; }
 
         private event Action<TSubject> OnAssert;
 
@@ -15,28 +15,26 @@ namespace Dotspec
             Scenario = scenario;
         }
 
-        public IBehaviourJunctionSpec<TSubject> Given(Action precondition)
+        public IAdditionalPreconditionSpec<TSubject> Given(Action precondition)
         {
             RegisterUnitOfSpec(_ => precondition());
 
             return this;
         }
 
-        public IBehaviourJunctionSpec<TSubject> Given(Action<TSubject> precondition)
+        public IAdditionalPreconditionSpec<TSubject, TData> Given<TData>(Func<TData> precondition)
         {
-            RegisterUnitOfSpec(precondition);
-
-            return this;
+            return new Dotspec<TSubject, TData>(Scenario, precondition);
         }
 
-        public IBehaviourJunctionSpec<TSubject> And(Action precondition)
+        public IAdditionalPreconditionSpec<TSubject> And(Action precondition)
         {
             RegisterUnitOfSpec(_ => precondition());
 
             return this;
         }
 
-        public IBehaviourJunctionSpec<TSubject> And(Action<TSubject> precondition)
+        public IAdditionalPreconditionSpec<TSubject> And(Action<TSubject> precondition)
         {
             RegisterUnitOfSpec(precondition);
 
