@@ -7,44 +7,45 @@ using Xunit;
 
 namespace Dotspec.Behaviour
 {
-    public class DotspecBehaviour
+    public class SpecFactoryFixture
     {
-        private void AssertScenario(string scenario, Action<Dotspec<object>> behaviour)
-        {
-            var subject = scenario.Spec<object>();
+        public ISpecFactory<object> SpecFactory { get; }
+        public IBehaviourSpec<object> BehaviourSpec { get; }
 
-            behaviour(subject);
-            subject.Assert(new object());
+        public SpecFactoryFixture()
+        {
+            SpecFactory = Substitute.For<ISpecFactory<object>>();
+            BehaviourSpec = Substitute.For<IBehaviourSpec<object>>();
+
+            SpecFactory.CreateBehaviourSpec(null).ReturnsForAnyArgs(BehaviourSpec);
+        }
+    }
+
+    public class PreconditionSpecTests : IClassFixture<SpecFactoryFixture>
+    {
+        private ISpecFactory<object> SpecFactory { get; }
+
+        public PreconditionSpecTests(SpecFactoryFixture fixture)
+        {
+            if (fixture == null) throw new ArgumentNullException(nameof(fixture));
+
+            SpecFactory = fixture.SpecFactory;
         }
 
         [Fact]
-        public void ShouldStartWithPreconditionSpec()
+        public void PreconditionWasRegistered()
         {
-            var subject = "Should start with precondition spec".Spec<object>();
-            var interfaces = subject.GetType().GetInterfaces();
+            var scenario = "Precondition was registered";
+            Action expectedPrecondition = () => { };
 
-            interfaces.Length.ShouldBe(1);
-            interfaces[0].ShouldBeOfType<IPreconditionSpec<object>>();
-        }
-
-        [Fact]
-        public void ShouldRegisterPrecondition()
-        {
-            var preconditionCalled = false;
-            Action precondition = () => preconditionCalled = true;
-
-            AssertScenario("Should register precondition", subject => subject.Given(precondition));
-            preconditionCalled.ShouldBeTrue();
-        }
-
-        [Fact]
-        public void ShouldRegisterAdditionalPreconditions()
-        {
-            var preconditionCalled = false;
-            Action precondition = () => preconditionCalled = true;
-
-            AssertScenario("Should register additional precondition", subject => subject.And(precondition));
-            preconditionCalled.ShouldBeTrue();
+            scenario.Spec<PreconditionSpec<object>>()
+                .Given(
+                    () => { })
+                .When(
+                    subject => subject.Given(expectedPrecondition))
+                .Then(
+                    () => SpecFactory.CreateBehaviourSpec(Arg.Is(expectedPrecondition)).Received(1))
+                .Assert(new PreconditionSpec<object>(scenario, SpecFactory));
         }
     }
 
@@ -135,17 +136,17 @@ namespace Dotspec.Behaviour
             result.Rate.ShouldBe((decimal)testCase["expectedRate"] + buffer);
         }
 
-        [Fact]
-        public void ShouldGetRateWithBufferWithDotSpec()
-        {
-            "Should get rate with buffer".Spec<OfxExchangeRateProvider>()
-                .Given(
-                    () => SetupTypedTestCase(3m, "AUD", "HKD", 2.5m))
-                .When(
-                    (subject, data) => subject.GetRate(data.FromCurrency, data.ToCurrency))
-                .Assert(
-                    data => new OfxExchangeRateProvider(data.Now, data.Parameters));
-        }
+        //[Fact]
+        //public void ShouldGetRateWithBufferWithDotSpec()
+        //{
+        //    "Should get rate with buffer".Spec<OfxExchangeRateProvider>()
+        //        .Given(
+        //            () => SetupTypedTestCase(3m, "AUD", "HKD", 2.5m))
+        //        .When(
+        //            (subject, data) => subject.GetRate(data.FromCurrency, data.ToCurrency))
+        //        .Assert(
+        //            data => new OfxExchangeRateProvider(data.Now, data.Parameters));
+        //}
 
         private void AssertResult(Dictionary<string, object> testCase, ExchangeRate result)
         {
