@@ -19,6 +19,22 @@ namespace Dotspec.Behaviour
         public void PreconditionWasRegistered()
         {
             var scenario = "Precondition was registered";
+            Action expectedPrecondition = () => { };
+
+            scenario.Spec<PreconditionSpec<object>>()
+                .Given(
+                    expectedPrecondition) // Expected precondition
+                .When(
+                    (subject) => subject.Given(expectedPrecondition))
+                .Then(
+                    () => SpecFactory.CreateBehaviourSpec(Arg.Is(expectedPrecondition)).Received(1))
+                .Assert(new PreconditionSpec<object>(scenario, SpecFactory));
+        }
+
+        [Fact]
+        public void PreconditionWithDataWasRegistered()
+        {
+            var scenario = "Precondition was registered";
 
             scenario.Spec<PreconditionSpec<object>>()
                 .Given(
