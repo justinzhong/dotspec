@@ -48,11 +48,15 @@
   <ItemGroup>
     <Compile Include="Assertable.cs" />
     <Compile Include="AssertionSpec.cs" />
+    <Compile Include="AssertionSpec%27TData.cs" />
     <Compile Include="BehaviourSpec.cs" />
+    <Compile Include="BehaviourSpec%27TData.cs" />
     <Compile Include="IAssertionSpec.cs" />
     <Compile Include="DotspecExtension.cs" />
     <Compile Include="IAssertable.cs" />
+    <Compile Include="IAssertionSpec%27TData.cs" />
     <Compile Include="IBehaviourSpec.cs" />
+    <Compile Include="IBehaviourSpec%27TData.cs" />
     <Compile Include="IPreconditionSpec.cs" />
     <Compile Include="ISpecFactory.cs" />
     <Compile Include="PreconditionSpec.cs" />

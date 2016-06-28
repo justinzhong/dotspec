@@ -7,48 +7,6 @@ using Xunit;
 
 namespace Dotspec.Behaviour
 {
-    public class SpecFactoryFixture
-    {
-        public ISpecFactory<object> SpecFactory { get; }
-        public IBehaviourSpec<object> BehaviourSpec { get; }
-
-        public SpecFactoryFixture()
-        {
-            SpecFactory = Substitute.For<ISpecFactory<object>>();
-            BehaviourSpec = Substitute.For<IBehaviourSpec<object>>();
-
-            SpecFactory.CreateBehaviourSpec(null).ReturnsForAnyArgs(BehaviourSpec);
-        }
-    }
-
-    public class PreconditionSpecTests : IClassFixture<SpecFactoryFixture>
-    {
-        private ISpecFactory<object> SpecFactory { get; }
-
-        public PreconditionSpecTests(SpecFactoryFixture fixture)
-        {
-            if (fixture == null) throw new ArgumentNullException(nameof(fixture));
-
-            SpecFactory = fixture.SpecFactory;
-        }
-
-        [Fact]
-        public void PreconditionWasRegistered()
-        {
-            var scenario = "Precondition was registered";
-            Action expectedPrecondition = () => { };
-
-            scenario.Spec<PreconditionSpec<object>>()
-                .Given(
-                    () => { })
-                .When(
-                    subject => subject.Given(expectedPrecondition))
-                .Then(
-                    () => SpecFactory.CreateBehaviourSpec(Arg.Is(expectedPrecondition)).Received(1))
-                .Assert(new PreconditionSpec<object>(scenario, SpecFactory));
-        }
-    }
-
     public enum ExchangeRateProviderEnum
     {
         Undefined = 0,

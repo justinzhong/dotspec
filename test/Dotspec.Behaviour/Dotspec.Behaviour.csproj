@@ -79,7 +79,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DotspecBehaviour.cs" />
+    <Compile Include="PreconditionSpecTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpecFactoryFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

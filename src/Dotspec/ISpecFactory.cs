@@ -6,5 +6,7 @@ namespace Dotspec
         where TSubject : class
     {
         IBehaviourSpec<TSubject> CreateBehaviourSpec(Action precondition);
+
+        IBehaviourSpec<TSubject, TData> CreateBehaviourSpec<TData>(Func<TData> precondition);
     }
 }

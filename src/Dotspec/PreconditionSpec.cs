@@ -24,5 +24,12 @@ namespace Dotspec
 
             return SpecFactory.CreateBehaviourSpec(precondition);
         }
+
+        public IBehaviourSpec<TSubject, TData> Given<TData>(Func<TData> precondition)
+        {
+            if (precondition == null) throw new ArgumentNullException(nameof(precondition));
+
+            return SpecFactory.CreateBehaviourSpec(precondition);
+        }
     }
 }
