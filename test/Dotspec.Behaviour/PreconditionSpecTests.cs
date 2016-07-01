@@ -4,26 +4,44 @@ using Xunit;
 
 namespace Dotspec.Behaviour
 {
+    /// <summary>
+    /// Validates the behaviour of PreconditionSpec class.
+    /// </summary>
     public class PreconditionSpecTests : IClassFixture<SpecFactoryFixture>
     {
         private ISpecFactory<object> SpecFactory { get; }
 
+        /// <summary>
+        /// Instantiates a new PreconditionSpecTests object.
+        /// </summary>
+        /// <param name="fixture"></param>
         public PreconditionSpecTests(SpecFactoryFixture fixture)
         {
             if (fixture == null) throw new ArgumentNullException(nameof(fixture));
 
             SpecFactory = fixture.SpecFactory;
+
+            // Returns a mocked BehaviourSpec
+            SpecFactory.CreateBehaviourSpec(null).ReturnsForAnyArgs(fixture.BehaviourSpec);
         }
 
+        /// <summary>
+        /// Asserts that when given a precondition the PreconditionSpec will
+        /// pass that to SpecFactory to instantiate an instance of 
+        /// IBehaviourSpec.
+        /// 
+        /// The precondition is declared as a variable outside the scope of
+        /// the PreconditionSpec instance.
+        /// </summary>
         [Fact]
         public void PreconditionWasRegistered()
         {
             var scenario = "Precondition was registered";
-            Action expectedPrecondition = () => { };
+            Action expectedPrecondition = null;
 
             scenario.Spec<PreconditionSpec<object>>()
                 .Given(
-                    expectedPrecondition) // Expected precondition
+                    expectedPrecondition = () => { }) // Setup the precondition that's been defined as variable
                 .When(
                     (subject) => subject.Given(expectedPrecondition))
                 .Then(
@@ -31,6 +49,14 @@ namespace Dotspec.Behaviour
                 .Assert(new PreconditionSpec<object>(scenario, SpecFactory));
         }
 
+        /// <summary>
+        /// Asserts that when given a precondition the PreconditionSpec will
+        /// pass that to SpecFactory to instantiate an instance of 
+        /// IBehaviourSpec.
+        /// 
+        /// The precondition is declared as an inline data within the scope of 
+        /// the PreconditionSpec instance.
+        /// </summary>
         [Fact]
         public void PreconditionWithDataWasRegistered()
         {
@@ -38,7 +64,7 @@ namespace Dotspec.Behaviour
 
             scenario.Spec<PreconditionSpec<object>>()
                 .Given(
-                    () => (Action)(() => { })) // Expected precondition
+                    () => (Action)(() => { })) // Setup the precondition and return as inline data
                 .When(
                     (subject, expectedPrecondition) => subject.Given(expectedPrecondition))
                 .Then(
