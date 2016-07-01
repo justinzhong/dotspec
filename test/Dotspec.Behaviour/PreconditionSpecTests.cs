@@ -1,13 +1,14 @@
 using System;
 using NSubstitute;
 using Xunit;
+using Shouldly;
 
 namespace Dotspec.Behaviour
 {
     /// <summary>
     /// Validates the behaviour of PreconditionSpec class.
     /// </summary>
-    public class PreconditionSpecTests : IClassFixture<SpecFactoryFixture>
+    public class PreconditionSpecTests : IClassFixture<SpecFactoryFixture>, IDisposable
     {
         private ISpecFactory<object> SpecFactory { get; }
 
@@ -45,7 +46,12 @@ namespace Dotspec.Behaviour
                 .When(
                     (subject) => subject.Given(expectedPrecondition))
                 .Then(
-                    () => SpecFactory.CreateBehaviourSpec(Arg.Is(expectedPrecondition)).Received(1))
+                    () => 
+                    {
+                        SpecFactory
+                            .Received(1)
+                            .CreateBehaviourSpec(Arg.Do<Action>(arg => arg.ShouldBe(expectedPrecondition)));
+                    })
                 .Assert(new PreconditionSpec<object>(scenario, SpecFactory));
         }
 
@@ -68,8 +74,18 @@ namespace Dotspec.Behaviour
                 .When(
                     (subject, expectedPrecondition) => subject.Given(expectedPrecondition))
                 .Then(
-                    expectedPrecondition => SpecFactory.CreateBehaviourSpec(Arg.Is(expectedPrecondition)).Received(1))
+                    expectedPrecondition => 
+                    {
+                        SpecFactory
+                            .Received(1)
+                            .CreateBehaviourSpec(Arg.Do<Action>(arg => arg.ShouldBe(expectedPrecondition)));
+                    })
                 .Assert(new PreconditionSpec<object>(scenario, SpecFactory));
+        }
+
+        public void Dispose()
+        {
+            SpecFactory.ClearReceivedCalls();
         }
     }
 }
