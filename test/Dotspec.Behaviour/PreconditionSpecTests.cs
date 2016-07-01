@@ -1,7 +1,6 @@
 using System;
 using NSubstitute;
 using Xunit;
-using Shouldly;
 
 namespace Dotspec.Behaviour
 {
@@ -50,7 +49,7 @@ namespace Dotspec.Behaviour
                     {
                         SpecFactory
                             .Received(1)
-                            .CreateBehaviourSpec(Arg.Do<Action>(arg => arg.ShouldBe(expectedPrecondition)));
+                            .CreateBehaviourSpec(Arg.Is(expectedPrecondition));
                     })
                 .Assert(new PreconditionSpec<object>(scenario, SpecFactory));
         }
@@ -78,7 +77,7 @@ namespace Dotspec.Behaviour
                     {
                         SpecFactory
                             .Received(1)
-                            .CreateBehaviourSpec(Arg.Do<Action>(arg => arg.ShouldBe(expectedPrecondition)));
+                            .CreateBehaviourSpec(Arg.Is(expectedPrecondition));
                     })
                 .Assert(new PreconditionSpec<object>(scenario, SpecFactory));
         }
