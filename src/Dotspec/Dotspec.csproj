@@ -47,10 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assertable.cs" />
+    <Compile Include="Assertable%27TData.cs" />
     <Compile Include="AssertionSpec.cs" />
     <Compile Include="AssertionSpec%27TData.cs" />
     <Compile Include="BehaviourSpec.cs" />
     <Compile Include="BehaviourSpec%27TData.cs" />
+    <Compile Include="IAssertable%27TData.cs" />
     <Compile Include="IAssertionSpec.cs" />
     <Compile Include="DotspecExtension.cs" />
     <Compile Include="IAssertable.cs" />

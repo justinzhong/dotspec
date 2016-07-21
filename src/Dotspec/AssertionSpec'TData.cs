@@ -17,16 +17,15 @@ namespace Dotspec
             Precondition = precondition;
         }
 
-        public IAssertable<TSubject> Then(Action<TData> assertion)
+        public IAssertable<TSubject, TData> Then(Action<TData> assertion)
         {
-            Action<TSubject> assertionSpec = subject =>
+            Action<TSubject, TData> assertionSpec = (subject, data) =>
             {
-                var data = Precondition();
                 Behaviour(subject, data);
                 assertion(data);
             };
 
-            return new Assertable<TSubject>(assertionSpec);
+            return new Assertable<TSubject, TData>(assertionSpec, Precondition);
         }
     }
 }

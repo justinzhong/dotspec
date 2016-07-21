@@ -2,11 +2,6 @@
 
 namespace Dotspec
 {
-    public interface IAssertable
-    {
-        void Assert();
-    }
-
     public interface IAssertable<TSubject>
         where TSubject : class
     {
@@ -15,4 +10,5 @@ namespace Dotspec
         //void Assert<TException>(TSubject subject, string exceptionMessage)
         //    where TException : Exception;
     }
+
 }

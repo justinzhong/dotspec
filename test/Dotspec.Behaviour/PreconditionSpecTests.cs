@@ -79,7 +79,7 @@ namespace Dotspec.Behaviour
                             .Received(1)
                             .CreateBehaviourSpec(Arg.Is(expectedPrecondition));
                     })
-                .Assert(new PreconditionSpec<object>(scenario, SpecFactory));
+                .Assert(_ => new PreconditionSpec<object>(scenario, SpecFactory));
         }
 
         public void Dispose()

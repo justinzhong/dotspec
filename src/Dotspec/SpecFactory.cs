@@ -16,7 +16,7 @@ namespace Dotspec
         {
             if (precondition == null) throw new ArgumentNullException(nameof(precondition));
 
-            return new BehaviourSpec<TSubject, TData>(precondition);
+            return new BehaviourSpec<TSubject, TData>(precondition, this);
         }
 
         public IAssertionSpec<TSubject> CreateAssertionSpec(Action<TSubject> behaviour)
@@ -24,6 +24,14 @@ namespace Dotspec
             if (behaviour == null) throw new ArgumentNullException(nameof(behaviour));
 
             return new AssertionSpec<TSubject>(behaviour);
+        }
+
+        public IAssertionSpec<TSubject, TData> CreateAssertionSpec<TData>(Action<TSubject, TData> behaviour, Func<TData> precondition)
+        {
+            if (behaviour == null) throw new ArgumentNullException(nameof(behaviour));
+            if (precondition == null) throw new ArgumentNullException(nameof(precondition));
+
+            return new AssertionSpec<TSubject, TData>(behaviour, precondition);
         }
     }
 }
