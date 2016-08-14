@@ -20,15 +20,7 @@ namespace Dotspec
 
         public IAssertionSpec<TSubject> When(Action<TSubject> behaviour)
         {
-            // Includes Precondition before passing along to create the
-            // AssertionSpec instance to continue the specification.
-            Action<TSubject> bundledBehaviour = subject =>
-            {
-                Precondition();
-                behaviour(subject);
-            };
-
-            return SpecFactory.CreateAssertionSpec(bundledBehaviour);
+            return SpecFactory.CreateAssertionSpec(Precondition, behaviour);
         }
     }
 }

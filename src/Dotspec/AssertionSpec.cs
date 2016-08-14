@@ -5,12 +5,15 @@ namespace Dotspec
     public class AssertionSpec<TSubject> : IAssertionSpec<TSubject>
         where TSubject : class
     {
+        private Action Precondition { get; }
         private Action<TSubject> BehaviourSpec { get; }
 
-        public AssertionSpec(Action<TSubject> behaviourSpec)
+        public AssertionSpec(Action precondition, Action<TSubject> behaviourSpec)
         {
+            if (precondition == null) throw new ArgumentNullException(nameof(precondition));
             if (behaviourSpec == null) throw new ArgumentNullException(nameof(behaviourSpec));
 
+            Precondition = precondition;
             BehaviourSpec = behaviourSpec;
         }
 
@@ -18,6 +21,7 @@ namespace Dotspec
         {
             Action<TSubject> assertionSpec = subject =>
             {
+                Precondition();
                 BehaviourSpec(subject);
                 assertion();
             };

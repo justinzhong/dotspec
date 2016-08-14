@@ -21,7 +21,7 @@ namespace Dotspec
         {
             if (behaviour == null) throw new ArgumentNullException(nameof(behaviour));
 
-            return SpecFactory.CreateAssertionSpec(behaviour, Precondition);
+            return SpecFactory.CreateAssertionSpec(Precondition, behaviour);
         }
     }
 }

@@ -19,17 +19,18 @@ namespace Dotspec
             return new BehaviourSpec<TSubject, TData>(precondition, this);
         }
 
-        public IAssertionSpec<TSubject> CreateAssertionSpec(Action<TSubject> behaviour)
+        public IAssertionSpec<TSubject> CreateAssertionSpec(Action precondition, Action<TSubject> behaviour)
         {
+            if (precondition == null) throw new ArgumentNullException(nameof(precondition));
             if (behaviour == null) throw new ArgumentNullException(nameof(behaviour));
 
-            return new AssertionSpec<TSubject>(behaviour);
+            return new AssertionSpec<TSubject>(precondition, behaviour);
         }
 
-        public IAssertionSpec<TSubject, TData> CreateAssertionSpec<TData>(Action<TSubject, TData> behaviour, Func<TData> precondition)
+        public IAssertionSpec<TSubject, TData> CreateAssertionSpec<TData>(Func<TData> precondition, Action<TSubject, TData> behaviour)
         {
-            if (behaviour == null) throw new ArgumentNullException(nameof(behaviour));
             if (precondition == null) throw new ArgumentNullException(nameof(precondition));
+            if (behaviour == null) throw new ArgumentNullException(nameof(behaviour));
 
             return new AssertionSpec<TSubject, TData>(behaviour, precondition);
         }

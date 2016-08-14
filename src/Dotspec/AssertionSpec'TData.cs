@@ -5,16 +5,16 @@ namespace Dotspec
     public class AssertionSpec<TSubject, TData> : IAssertionSpec<TSubject, TData>
         where TSubject : class
     {
-        private Action<TSubject, TData> Behaviour { get; }
         private Func<TData> Precondition { get; }
+        private Action<TSubject, TData> Behaviour { get; }
 
         public AssertionSpec(Action<TSubject, TData> behaviour, Func<TData> precondition)
         {
-            if (behaviour == null) throw new ArgumentNullException(nameof(behaviour));
             if (precondition == null) throw new ArgumentNullException(nameof(precondition));
+            if (behaviour == null) throw new ArgumentNullException(nameof(behaviour));
 
-            Behaviour = behaviour;
             Precondition = precondition;
+            Behaviour = behaviour;
         }
 
         public IAssertable<TSubject, TData> Then(Action<TData> assertion)

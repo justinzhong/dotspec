@@ -9,8 +9,8 @@ namespace Dotspec
 
         IBehaviourSpec<TSubject, TData> CreateBehaviourSpec<TData>(Func<TData> precondition);
 
-        IAssertionSpec<TSubject> CreateAssertionSpec(Action<TSubject> behaviour);
+        IAssertionSpec<TSubject> CreateAssertionSpec(Action precondition, Action<TSubject> behaviour);
 
-        IAssertionSpec<TSubject, TData> CreateAssertionSpec<TData>(Action<TSubject, TData> behaviour, Func<TData> precondition);
+        IAssertionSpec<TSubject, TData> CreateAssertionSpec<TData>(Func<TData> precondition, Action<TSubject, TData> behaviour);
     }
 }
