@@ -51,65 +51,12 @@ namespace Dotspec.Behaviour
                     behaviour = (Action<object>)(_ => Events["behaviour"] = behaviourMessage)
                 })
                 .When(
-                    (sut, data) => sut.When(data.behaviour)) // When the behaviour is passed through to the test subject.
+                    (subject, data) => subject.When(data.behaviour)) // When the 'When' clause is invoked.
                 .Then(
                     // Then validate that the precondition and behaviour were
                     // passed to the SpecFactory.
-                    (sut, data) => ValidateSpecFactoryWithAction(preconditionMessage, behaviourMessage))
+                    (subject, data) => ValidateSpecFactoryWithAction(preconditionMessage, behaviourMessage))
                 .Assert(data => new BehaviourSpec<object>(data.precondition, SpecFactory));
-        }
-
-        /// <summary>
-        /// Asserts that the BehaviourSpec will forward the precondition and the
-        /// behaviour action to SpecFactory to create an instance of 
-        /// IAssertionSpec.
-        /// </summary>
-        [Fact]
-        public void BehaviourWithDataWithWasRegistered()
-        {
-            var scenario = "Behaviour was registered";
-            var preconditionMessage = "Precondition data";
-
-            scenario.Spec<BehaviourSpec<object, string>>()
-                .Given(() => new
-                {
-                    // Given a precondition and a behaviour.
-                    precondition = (Func<string>)(() => preconditionMessage),
-                    behaviour = (Action<object, string>)((_, data) => Events["behaviour"] = $"Behaviour called with data: {data}")
-                })
-                .When(
-                    (sut, data) => sut.When(data.behaviour)) // When the behaviour is passed through to the test subject.
-                .Then(
-                    // Then validate that both precondition and behaviour have
-                    // been passed to the SpecFactory.
-                    (sut, data) => ValidateSpecFactoryWithData(preconditionMessage))
-                .Assert(data => new BehaviourSpec<object, string>(data.precondition, SpecFactory));
-        }
-
-        private bool ValidateBehaviourWithData(Action<object, string> behaviour, string preconditionMessage)
-        {
-            behaviour(new object(), preconditionMessage);
-            Events.Count.ShouldBe(1);
-            Events["behaviour"].ShouldBe($"Behaviour called with data: {preconditionMessage}");
-
-            return true;
-        }
-
-        private bool ValidatePreconditionWithData(Func<string> precondition, string preconditionMessage)
-        {
-            var actualMessage = precondition();
-            actualMessage.ShouldBe(preconditionMessage);
-
-            return true;
-        }
-
-        private void ValidateSpecFactoryWithData(string dataMessage)
-        {
-            // Validate that both precondition and behaviour have been passed to
-            // the SpecFactory.
-            SpecFactory.Received(1).CreateAssertionSpec(
-                Arg.Is<Func<string>>(arg => ValidatePreconditionWithData(arg, dataMessage)),
-                Arg.Is<Action<object, string>>(arg => ValidateBehaviourWithData(arg, dataMessage)));
         }
 
         private bool ValidatePreconditionWithMessage(Action precondition, string preconditionMessage)

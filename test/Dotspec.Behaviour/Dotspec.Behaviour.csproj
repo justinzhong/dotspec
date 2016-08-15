@@ -80,6 +80,7 @@
   <ItemGroup>
     <Compile Include="AssertionSpec%27TDataTest.cs" />
     <Compile Include="AssertionSpecTests.cs" />
+    <Compile Include="BehaviourSpec%27TDataTests.cs" />
     <Compile Include="BehaviourSpecTests.cs" />
     <Compile Include="PreconditionSpecTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
