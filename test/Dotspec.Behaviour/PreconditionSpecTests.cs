@@ -1,5 +1,5 @@
-using System;
 using NSubstitute;
+using System;
 using Xunit;
 
 namespace Dotspec.Behaviour
@@ -45,7 +45,7 @@ namespace Dotspec.Behaviour
                 .When(
                     (subject) => subject.Given(expectedPrecondition))
                 .Then(
-                    () => 
+                    _ => 
                     {
                         SpecFactory
                             .Received(1)
@@ -73,7 +73,7 @@ namespace Dotspec.Behaviour
                 .When(
                     (subject, expectedPrecondition) => subject.Given(expectedPrecondition))
                 .Then(
-                    expectedPrecondition => 
+                    (subject, expectedPrecondition) => 
                     {
                         SpecFactory
                             .Received(1)

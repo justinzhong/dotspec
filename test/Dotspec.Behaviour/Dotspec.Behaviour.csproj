@@ -78,7 +78,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="DotspecBehaviour.cs" />
+    <Compile Include="AssertionSpec%27TDataTest.cs" />
+    <Compile Include="AssertionSpecTests.cs" />
     <Compile Include="BehaviourSpecTests.cs" />
     <Compile Include="PreconditionSpecTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

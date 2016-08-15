@@ -5,16 +5,19 @@ namespace Dotspec
     public class Assertable<TSubject, TData> : IAssertable<TSubject, TData>
         where TSubject : class
     {
-        private Action<TSubject, TData> AssertionSpec { get; }
         private Func<TData> Precondition { get; }
+        private Action<TSubject, TData> Behaviour { get; }
+        private Action<TSubject, TData> Assertion { get; }
 
-        public Assertable(Action<TSubject, TData> assertionSpec, Func<TData> precondition)
+        public Assertable(Func<TData> precondition, Action<TSubject, TData> behaviour, Action<TSubject, TData> assertion)
         {
-            if (assertionSpec == null) throw new ArgumentNullException(nameof(assertionSpec));
             if (precondition == null) throw new ArgumentNullException(nameof(precondition));
+            if (assertion == null) throw new ArgumentNullException(nameof(assertion));
+            if (behaviour == null) throw new ArgumentNullException(nameof(behaviour));
 
-            AssertionSpec = assertionSpec;
             Precondition = precondition;
+            Assertion = assertion;
+            Behaviour = behaviour;
         }
 
         public void Assert(Func<TData, TSubject> subjectConstructor)
@@ -24,7 +27,8 @@ namespace Dotspec
             var data = Precondition();
             var subject = subjectConstructor(data);
 
-            AssertionSpec(subject, data);
+            Behaviour(subject, data);
+            Assertion(subject, data);
         }
     }
 }

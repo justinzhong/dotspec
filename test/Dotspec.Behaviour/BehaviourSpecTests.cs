@@ -55,7 +55,7 @@ namespace Dotspec.Behaviour
                 .Then(
                     // Then validate that the precondition and behaviour were
                     // passed to the SpecFactory.
-                    data => ValidateSpecFactoryWithAction(preconditionMessage, behaviourMessage))
+                    (sut, data) => ValidateSpecFactoryWithAction(preconditionMessage, behaviourMessage))
                 .Assert(data => new BehaviourSpec<object>(data.precondition, SpecFactory));
         }
 
@@ -82,7 +82,7 @@ namespace Dotspec.Behaviour
                 .Then(
                     // Then validate that both precondition and behaviour have
                     // been passed to the SpecFactory.
-                    _ => ValidateSpecFactoryWithData(preconditionMessage))
+                    (sut, data) => ValidateSpecFactoryWithData(preconditionMessage))
                 .Assert(data => new BehaviourSpec<object, string>(data.precondition, SpecFactory));
         }
 

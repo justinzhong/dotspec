@@ -24,7 +24,7 @@ namespace Dotspec
             if (precondition == null) throw new ArgumentNullException(nameof(precondition));
             if (behaviour == null) throw new ArgumentNullException(nameof(behaviour));
 
-            return new AssertionSpec<TSubject>(precondition, behaviour);
+            return new AssertionSpec<TSubject>(precondition, behaviour, this);
         }
 
         public IAssertionSpec<TSubject, TData> CreateAssertionSpec<TData>(Func<TData> precondition, Action<TSubject, TData> behaviour)
@@ -32,7 +32,25 @@ namespace Dotspec
             if (precondition == null) throw new ArgumentNullException(nameof(precondition));
             if (behaviour == null) throw new ArgumentNullException(nameof(behaviour));
 
-            return new AssertionSpec<TSubject, TData>(behaviour, precondition);
+            return new AssertionSpec<TSubject, TData>(precondition, behaviour, this);
+        }
+
+        public IAssertable<TSubject> CreateAssertable(Action precondition, Action<TSubject> behaviour, Action<TSubject> assertion)
+        {
+            if (precondition == null) throw new ArgumentNullException(nameof(precondition));
+            if (behaviour == null) throw new ArgumentNullException(nameof(behaviour));
+            if (assertion == null) throw new ArgumentNullException(nameof(assertion));
+
+            return new Assertable<TSubject>(precondition, behaviour, assertion);
+        }
+
+        public IAssertable<TSubject, TData> CreateAssertable<TData>(Func<TData> precondition, Action<TSubject, TData> behaviour, Action<TSubject, TData> assertion)
+        {
+            if (precondition == null) throw new ArgumentNullException(nameof(precondition));
+            if (behaviour == null) throw new ArgumentNullException(nameof(behaviour));
+            if (assertion == null) throw new ArgumentNullException(nameof(assertion));
+
+            return new Assertable<TSubject, TData>(precondition, behaviour, assertion);
         }
     }
 }

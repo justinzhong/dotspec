@@ -7,26 +7,24 @@ namespace Dotspec
     {
         private Action Precondition { get; }
         private Action<TSubject> BehaviourSpec { get; }
+        private ISpecFactory<TSubject> SpecFactory { get; }
 
-        public AssertionSpec(Action precondition, Action<TSubject> behaviourSpec)
+        public AssertionSpec(Action precondition, Action<TSubject> behaviourSpec, ISpecFactory<TSubject> specFactory)
         {
             if (precondition == null) throw new ArgumentNullException(nameof(precondition));
             if (behaviourSpec == null) throw new ArgumentNullException(nameof(behaviourSpec));
+            if (specFactory == null) throw new ArgumentNullException(nameof(specFactory));
 
             Precondition = precondition;
             BehaviourSpec = behaviourSpec;
+            SpecFactory = specFactory;
         }
 
-        public IAssertable<TSubject> Then(Action assertion)
+        public IAssertable<TSubject> Then(Action<TSubject> assertion)
         {
-            Action<TSubject> assertionSpec = subject =>
-            {
-                Precondition();
-                BehaviourSpec(subject);
-                assertion();
-            };
+            if (assertion == null) throw new ArgumentNullException(nameof(assertion));
 
-            return new Assertable<TSubject>(assertionSpec);
+            return SpecFactory.CreateAssertable(Precondition, BehaviourSpec, assertion);
         }
     }
 }
