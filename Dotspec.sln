@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A1E79E7B-5FBB-4FC8-9B5A-2B0E8EDBC3DE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{652BF440-10F2-469A-8152-6A7AA3C3BA79}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{947177B0-FDEE-4A44-951F-8506DA3C30A2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotspec", "src\Dotspec\Dotspec.csproj", "{DF783172-1A8B-43BE-8BA0-CE6DAD5B05AA}"
 EndProject

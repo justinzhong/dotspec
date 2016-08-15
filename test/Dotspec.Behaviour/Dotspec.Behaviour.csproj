@@ -78,7 +78,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Assertable%27TDataTests.cs" />
     <Compile Include="AssertionSpec%27TDataTest.cs" />
+    <Compile Include="AssertableTests.cs" />
     <Compile Include="AssertionSpecTests.cs" />
     <Compile Include="BehaviourSpec%27TDataTests.cs" />
     <Compile Include="BehaviourSpecTests.cs" />
