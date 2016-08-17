@@ -27,7 +27,7 @@ namespace Dotspec.Behaviour
 
             // Returns a mocked AssertionSpec and a mocked Assertable fixture object.
             SpecFactory.CreateAssertionSpec<string>(null, null).ReturnsForAnyArgs(fixture.AssertionSpecWithData);
-            SpecFactory.CreateAssertable<string>(null, null, null).ReturnsForAnyArgs(fixture.AssertableWithData);
+            SpecFactory.CreateAssertable(null, (Action<object, string>)null, null).ReturnsForAnyArgs(fixture.AssertableWithData);
 
             Events = new Dictionary<string, string>();
         }

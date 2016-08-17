@@ -60,9 +60,12 @@
     <Compile Include="IBehaviourSpec.cs" />
     <Compile Include="IBehaviourSpec%27TData.cs" />
     <Compile Include="IPreconditionSpec.cs" />
+    <Compile Include="IResultAssertionSpec.cs" />
     <Compile Include="ISpecFactory.cs" />
     <Compile Include="PreconditionSpec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResultAssertable.cs" />
+    <Compile Include="ResultAssertionSpec.cs" />
     <Compile Include="SpecFactory.cs" />
   </ItemGroup>
   <ItemGroup>

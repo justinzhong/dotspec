@@ -59,6 +59,41 @@ namespace Dotspec.Behaviour
                 .Assert(data => new BehaviourSpec<object>(data.precondition, SpecFactory));
         }
 
+        /// <summary>
+        /// Asserts that the BehaviourSpec will forward the precondition and the
+        /// behaviour action to SpecFactory to create an instance of 
+        /// IAssertionSpec.
+        /// </summary>
+        [Fact]
+        public void BehaviourWithResultWasRegistered()
+        {
+            var scenario = "Behaviour with result was registered";
+            var preconditionMessage = "Precondition called";
+            var behaviourMessage = $"Behaviour result {Guid.NewGuid()}";
+
+            scenario.Spec<BehaviourSpec<object>>()
+                .Given(() => new
+                {
+                    // Given a precondition and a behaviour.
+                    precondition = (Action)(() => Events["precondition"] = preconditionMessage),
+                    behaviour = (Func<object, string>)(_ => behaviourMessage)
+                })
+                .When(
+                    (subject, data) => subject.When(data.behaviour)) // When the 'When' clause is invoked.
+                .Then(
+                    // Then validate that the precondition and behaviour were
+                    // passed to the SpecFactory.
+                    (subject, data) => ValidateSpecFactoryWithResult(preconditionMessage, behaviourMessage))
+                .Assert(data => new BehaviourSpec<object>(data.precondition, SpecFactory));
+        }
+
+        private bool ValidateBehaviourWithResult(Func<object, string> behaviour, string behaviourMessage)
+        {
+            behaviour(new object()).ShouldBe(behaviourMessage);
+
+            return true;
+        }
+
         private bool ValidatePreconditionWithMessage(Action precondition, string preconditionMessage)
         {
             precondition();
@@ -80,6 +115,16 @@ namespace Dotspec.Behaviour
             SpecFactory.Received(1).CreateAssertionSpec(
                 Arg.Is<Action>(arg => ValidatePreconditionWithMessage(arg, preconditionMessage)), 
                 Arg.Is<Action<object>>(arg => ValidateBehaviourWithMessage(arg, behaviourMessage)));
+
+            return true;
+        }
+
+        private bool ValidateSpecFactoryWithResult(string preconditionMessage, string behaviourMessage)
+        {
+            SpecFactory.Received(1)
+                .CreateResultAssertionSpec(
+                    Arg.Is<Action>(arg => ValidatePreconditionWithMessage(arg, preconditionMessage)),
+                    Arg.Is<Func<object, string>>(arg => ValidateBehaviourWithResult(arg, behaviourMessage)));
 
             return true;
         }

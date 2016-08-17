@@ -20,7 +20,16 @@ namespace Dotspec
 
         public IAssertionSpec<TSubject> When(Action<TSubject> behaviour)
         {
+            if (behaviour == null) throw new ArgumentNullException(nameof(behaviour));
+
             return SpecFactory.CreateAssertionSpec(Precondition, behaviour);
+        }
+
+        public IResultAssertionSpec<TSubject, TResult> When<TResult>(Func<TSubject, TResult> behaviour)
+        {
+            if (behaviour == null) throw new ArgumentNullException(nameof(behaviour));
+
+            return SpecFactory.CreateResultAssertionSpec(Precondition, behaviour);
         }
     }
 }
