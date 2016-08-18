@@ -81,6 +81,7 @@
     <Compile Include="Assertable%27TDataTests.cs" />
     <Compile Include="AssertionSpec%27TDataTest.cs" />
     <Compile Include="AssertableTests.cs" />
+    <Compile Include="ResultAssertableTests.cs" />
     <Compile Include="ResultAssertionSpecTests.cs" />
     <Compile Include="AssertionSpecTests.cs" />
     <Compile Include="BehaviourSpec%27TDataTests.cs" />
