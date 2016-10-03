@@ -29,4 +29,5 @@ namespace Dotspec
             AssertionSpec(subject, result);
         }
     }
+
 }

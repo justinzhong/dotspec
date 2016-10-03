@@ -1,4 +1,5 @@
 using NSubstitute;
+using Shouldly;
 using System;
 using Xunit;
 
@@ -36,22 +37,24 @@ namespace Dotspec.Behaviour
         [Fact]
         public void PreconditionWasRegistered()
         {
-            var scenario = "Precondition was registered";
-            Action expectedPrecondition = null;
+            var scenario = "Precondition (function) was registered";
+            var seed = Guid.NewGuid();
 
             scenario.Spec<PreconditionSpec<object>>()
                 .Given(
-                    expectedPrecondition = () => { }) // Setup the precondition that's been defined as variable
+                    () => (Func<object>)(() => seed)) // Setup the precondition that's been defined as variable
                 .When(
-                    (subject) => subject.Given(expectedPrecondition))
+                    (subject, data) => subject.Given(data))
                 .Then(
-                    _ => 
+                    (_, data) => 
                     {
                         SpecFactory
                             .Received(1)
-                            .CreateBehaviourSpec(Arg.Is(expectedPrecondition));
+                            .CreateBehaviourSpec(Arg.Is(data));
+
+                        data().ShouldBe(seed);
                     })
-                .Assert(new PreconditionSpec<object>(scenario, SpecFactory));
+                .Assert(data => new PreconditionSpec<object>(scenario, SpecFactory));
         }
 
         /// <summary>
@@ -65,7 +68,7 @@ namespace Dotspec.Behaviour
         [Fact]
         public void PreconditionWithDataWasRegistered()
         {
-            var scenario = "Precondition was registered";
+            var scenario = "Precondition (action) was registered";
 
             scenario.Spec<PreconditionSpec<object>>()
                 .Given(
