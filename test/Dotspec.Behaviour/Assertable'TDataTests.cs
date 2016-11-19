@@ -47,7 +47,7 @@ namespace Dotspec.Behaviour
             var behaviourMessage = "Behaviour called with data: {0}";
             var assertionMessage = "Assertion called with data: {0}";
 
-            scenario.Spec<Assertable<object, string>>()
+            scenario.Spec<SubjectSpec<object, string>>()
                 .Given(() => new
                 {
                     // Given a precondition, a behaviour and an assertion.
@@ -56,12 +56,12 @@ namespace Dotspec.Behaviour
                     assertion = (Action<object, string>)((subject, data) => Events["assertion"] = string.Format(assertionMessage, data))
                 })
                 .When(
-                    (subject, data) => subject.Assert(_ => new object())) // When the 'Assert' clause is invoked.
+                    (subject, data) => subject.For(_ => new object())) // When the 'Assert' clause is invoked.
                 .Then(
                     // Then validate that precondition, behaviour and assertion 
                     // have been evaluated.
                     (subject, data) => ValidateSpecEvaluation(preconditionData, behaviourMessage, assertionMessage))
-                .Assert(data => new Assertable<object, string>(data.precondition, data.behaviour, data.assertion));
+                .For(data => new SubjectSpec<object, string>(data.precondition, data.behaviour, data.assertion));
         }
 
         private void ValidateSpecEvaluation(string preconditionData, string behaviourMessage, string assertionMessage)

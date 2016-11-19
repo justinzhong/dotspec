@@ -2,7 +2,7 @@
 
 namespace Dotspec
 {
-    public interface IBehaviourSpec<TSubject>
+    public interface IActSpec<TSubject>
         where TSubject : class
     {
         IAssertionSpec<TSubject> When(Action<TSubject> behaviour);

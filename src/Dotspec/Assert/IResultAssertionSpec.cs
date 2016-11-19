@@ -5,6 +5,6 @@ namespace Dotspec
     public interface IResultAssertionSpec<TSubject, TResult> : IAssertionSpec<TSubject>
         where TSubject : class
     {
-        IAssertable<TSubject> Then(Action<TSubject, TResult> assertion);
+        ISubjectSpec<TSubject> Then(Action<TSubject, TResult> assertion);
     }
 }

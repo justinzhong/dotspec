@@ -2,7 +2,7 @@ using System;
 
 namespace Dotspec
 {
-    public class Assertable<TSubject> : IAssertable<TSubject>
+    public class SubjectSpec<TSubject> : ISubjectSpec<TSubject>
         where TSubject : class
     {
         private Action Precondition { get; }
@@ -10,7 +10,7 @@ namespace Dotspec
         private ISpecFactory<TSubject> SpecFactory { get; }
         private Action<TSubject> AssertionSpec { get; }
 
-        public Assertable(Action precondition, Action<TSubject> behaviourSpec, Action<TSubject> assertionSpec)
+        public SubjectSpec(Action precondition, Action<TSubject> behaviourSpec, Action<TSubject> assertionSpec)
         {
             if (precondition == null) throw new ArgumentNullException(nameof(precondition));
             if (behaviourSpec == null) throw new ArgumentNullException(nameof(behaviourSpec));
@@ -21,7 +21,7 @@ namespace Dotspec
             AssertionSpec = assertionSpec;
         }
 
-        public void Assert(TSubject subject)
+        public void For(TSubject subject)
         {
             if (subject == null) throw new ArgumentNullException(nameof(subject));
 

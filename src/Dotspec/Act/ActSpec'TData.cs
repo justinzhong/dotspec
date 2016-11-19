@@ -2,14 +2,13 @@ using System;
 
 namespace Dotspec
 {
-    public class BehaviourSpec<TSubject> : IBehaviourSpec<TSubject>
+    public class ActSpec<TSubject, TData> : IActSpec<TSubject, TData>
         where TSubject : class
     {
-        private Action Precondition { get; }
-
+        private Func<TData> Precondition { get; }
         private ISpecFactory<TSubject> SpecFactory { get; }
 
-        public BehaviourSpec(Action precondition, ISpecFactory<TSubject> specFactory)
+        public ActSpec(Func<TData> precondition, ISpecFactory<TSubject> specFactory)
         {
             if (precondition == null) throw new ArgumentNullException(nameof(precondition));
             if (specFactory == null) throw new ArgumentNullException(nameof(specFactory));
@@ -18,18 +17,11 @@ namespace Dotspec
             SpecFactory = specFactory;
         }
 
-        public IAssertionSpec<TSubject> When(Action<TSubject> behaviour)
+        public IAssertionSpec<TSubject, TData> When(Action<TSubject, TData> behaviour)
         {
             if (behaviour == null) throw new ArgumentNullException(nameof(behaviour));
 
             return SpecFactory.CreateAssertionSpec(Precondition, behaviour);
-        }
-
-        public IResultAssertionSpec<TSubject, TResult> When<TResult>(Func<TSubject, TResult> behaviour)
-        {
-            if (behaviour == null) throw new ArgumentNullException(nameof(behaviour));
-
-            return SpecFactory.CreateResultAssertionSpec(Precondition, behaviour);
         }
     }
 }

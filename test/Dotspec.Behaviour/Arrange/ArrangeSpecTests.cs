@@ -1,14 +1,15 @@
+using System;
+using Dotspec.Arrange;
 using NSubstitute;
 using Shouldly;
-using System;
 using Xunit;
 
-namespace Dotspec.Behaviour
+namespace Dotspec.Behaviour.Arrange
 {
     /// <summary>
     /// Validates the behaviour of PreconditionSpec class.
     /// </summary>
-    public class PreconditionSpecTests : IClassFixture<SpecFactoryFixture>, IDisposable
+    public class ArrangeSpecTests : IClassFixture<SpecFactoryFixture>, IDisposable
     {
         private ISpecFactory<object> SpecFactory { get; }
 
@@ -16,7 +17,7 @@ namespace Dotspec.Behaviour
         /// Instantiates a new PreconditionSpecTests object.
         /// </summary>
         /// <param name="fixture"></param>
-        public PreconditionSpecTests(SpecFactoryFixture fixture)
+        public ArrangeSpecTests(SpecFactoryFixture fixture)
         {
             if (fixture == null) throw new ArgumentNullException(nameof(fixture));
 
@@ -27,12 +28,12 @@ namespace Dotspec.Behaviour
         }
 
         /// <summary>
-        /// Asserts that when given a precondition the PreconditionSpec will
+        /// When given a precondition the ArrangeSpec instance will
         /// pass that to SpecFactory to instantiate an instance of 
-        /// IBehaviourSpec.
+        /// IArrangeSpec.
         /// 
         /// The precondition is declared as a variable outside the scope of
-        /// the PreconditionSpec instance.
+        /// the ArrangeSpec instance.
         /// </summary>
         [Fact]
         public void PreconditionWasRegistered()
@@ -40,21 +41,21 @@ namespace Dotspec.Behaviour
             var scenario = "Precondition (function) was registered";
             var seed = Guid.NewGuid();
 
-            scenario.Spec<PreconditionSpec<object>>()
+            scenario.Spec<ArrangeSpec<object>>()
                 .Given(
                     () => (Func<object>)(() => seed)) // Setup the precondition that's been defined as variable
                 .When(
-                    (subject, data) => subject.Given(data))
+                    (arrangeSpec, precondition) => arrangeSpec.Given(precondition))
                 .Then(
-                    (_, data) => 
+                    (precondition) =>
                     {
                         SpecFactory
                             .Received(1)
-                            .CreateBehaviourSpec(Arg.Is(data));
+                            .CreateBehaviourSpec(Arg.Is(precondition));
 
-                        data().ShouldBe(seed);
+                        precondition().ShouldBe(seed);
                     })
-                .Assert(data => new PreconditionSpec<object>(scenario, SpecFactory));
+                .For(new ArrangeSpec<object>(scenario, SpecFactory));
         }
 
         /// <summary>
@@ -70,19 +71,19 @@ namespace Dotspec.Behaviour
         {
             var scenario = "Precondition (action) was registered";
 
-            scenario.Spec<PreconditionSpec<object>>()
+            scenario.Spec<ArrangeSpec<object>>()
                 .Given(
                     () => (Action)(() => { })) // Setup the precondition and return as inline data
                 .When(
-                    (subject, expectedPrecondition) => subject.Given(expectedPrecondition))
+                    (subject, precondition) => subject.Given(precondition))
                 .Then(
-                    (subject, expectedPrecondition) => 
+                    (precondition) =>
                     {
                         SpecFactory
                             .Received(1)
-                            .CreateBehaviourSpec(Arg.Is(expectedPrecondition));
+                            .CreateBehaviourSpec(Arg.Is(precondition));
                     })
-                .Assert(_ => new PreconditionSpec<object>(scenario, SpecFactory));
+                .For(new ArrangeSpec<object>(scenario, SpecFactory));
         }
 
         public void Dispose()

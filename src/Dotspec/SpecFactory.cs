@@ -5,18 +5,18 @@ namespace Dotspec
     public class SpecFactory<TSubject> : ISpecFactory<TSubject>
         where TSubject : class
     {
-        public IBehaviourSpec<TSubject> CreateBehaviourSpec(Action precondition)
+        public IActSpec<TSubject> CreateBehaviourSpec(Action precondition)
         {
             if (precondition == null) throw new ArgumentNullException(nameof(precondition));
 
-            return new BehaviourSpec<TSubject>(precondition, this);
+            return new ActSpec<TSubject>(precondition, this);
         }
 
-        public IBehaviourSpec<TSubject, TData> CreateBehaviourSpec<TData>(Func<TData> precondition)
+        public IActSpec<TSubject, TData> CreateBehaviourSpec<TData>(Func<TData> precondition)
         {
             if (precondition == null) throw new ArgumentNullException(nameof(precondition));
 
-            return new BehaviourSpec<TSubject, TData>(precondition, this);
+            return new ActSpec<TSubject, TData>(precondition, this);
         }
 
         public IAssertionSpec<TSubject> CreateAssertionSpec(Action precondition, Action<TSubject> behaviour)
@@ -43,31 +43,40 @@ namespace Dotspec
             return new ResultAssertionSpec<TSubject, TResult>(precondition, behaviour, this);
         }
 
-        public IAssertable<TSubject> CreateAssertable(Action precondition, Action<TSubject> behaviour, Action<TSubject> assertion)
+        public ISubjectSpec<TSubject> CreateAssertable(Action precondition, Action<TSubject> behaviour, Action<TSubject> assertion)
         {
             if (precondition == null) throw new ArgumentNullException(nameof(precondition));
             if (behaviour == null) throw new ArgumentNullException(nameof(behaviour));
             if (assertion == null) throw new ArgumentNullException(nameof(assertion));
 
-            return new Assertable<TSubject>(precondition, behaviour, assertion);
+            return new SubjectSpec<TSubject>(precondition, behaviour, assertion);
         }
 
-        public IAssertable<TSubject> CreateAssertable<TResult>(Action precondition, Func<TSubject, TResult> behaviour, Action<TSubject, TResult> assertion)
+        public ISubjectSpec<TSubject> CreateAssertable<TResult>(Action precondition, Func<TSubject, TResult> behaviour, Action<TSubject, TResult> assertion)
         {
             if (precondition == null) throw new ArgumentNullException(nameof(precondition));
             if (behaviour == null) throw new ArgumentNullException(nameof(behaviour));
             if (assertion == null) throw new ArgumentNullException(nameof(assertion));
 
-            return new ResultAssertable<TSubject, TResult>(precondition, behaviour, assertion);
+            return new SubjectResultSpec<TSubject, TResult>(precondition, behaviour, assertion);
         }
 
-        public IAssertable<TSubject, TData> CreateAssertable<TData>(Func<TData> precondition, Action<TSubject, TData> behaviour, Action<TSubject, TData> assertion)
+        public ISubjectSpec<TSubject, TData> CreateAssertable<TData>(Func<TData> precondition, Action<TSubject, TData> behaviour, Action<TSubject, TData> assertion)
         {
             if (precondition == null) throw new ArgumentNullException(nameof(precondition));
             if (behaviour == null) throw new ArgumentNullException(nameof(behaviour));
             if (assertion == null) throw new ArgumentNullException(nameof(assertion));
 
-            return new Assertable<TSubject, TData>(precondition, behaviour, assertion);
+            return new SubjectSpec<TSubject, TData>(precondition, behaviour, assertion);
+        }
+
+        public ISubjectSpec<TSubject, TData> CreateSubjectSpec<TData>(Func<TData> precondition, Action<TSubject, TData> behaviour, Action<TData> assertion)
+        {
+            if (precondition == null) throw new ArgumentNullException(nameof(precondition));
+            if (behaviour == null) throw new ArgumentNullException(nameof(behaviour));
+            if (assertion == null) throw new ArgumentNullException(nameof(assertion));
+
+            return new SubjectSpec<TSubject, TData>(precondition, behaviour, (_, data) => assertion(data));
         }
     }
 }

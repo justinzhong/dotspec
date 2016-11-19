@@ -43,7 +43,7 @@ namespace Dotspec.Behaviour
             var expectedAssertionMessage = string.Format(assertionMessage, behaviourResult);
             var sequence = 0;
 
-            "All test specification steps should have been evaluated".Spec<ResultAssertable<object, string>>()
+            "All test specification steps should have been evaluated".Spec<SubjectResultSpec<object, string>>()
                 .Given(() => new
                 {
                     // Given a precondition, a behaviour and an assertion.
@@ -52,12 +52,12 @@ namespace Dotspec.Behaviour
                     assertion = BuildAssertion(++sequence, assertionMessage)
                 })
                 .When(
-                    (subject, data) => subject.Assert(subject)) // When the 'Assert' clause is invoked.
+                    (subject, data) => subject.For(subject)) // When the 'Assert' clause is invoked.
                 .Then(
                     // Then validate that precondition, behaviour and assertion 
                     // have been passed to the SpecFactory.
                     (subject, data) => ValidateOutcome(preconditionMessage, behaviourResult, expectedAssertionMessage))
-                .Assert(data => new ResultAssertable<object, string>(data.precondition, data.behaviour, data.assertion));
+                .For(data => new SubjectResultSpec<object, string>(data.precondition, data.behaviour, data.assertion));
         }
 
         private Action BuildPrecondition(int sequence, string preconditionMessage)

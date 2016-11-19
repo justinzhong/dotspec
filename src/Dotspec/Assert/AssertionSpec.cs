@@ -20,7 +20,7 @@ namespace Dotspec
             SpecFactory = specFactory;
         }
 
-        public IAssertable<TSubject> Then(Action<TSubject> assertion)
+        public ISubjectSpec<TSubject> Then(Action<TSubject> assertion)
         {
             if (assertion == null) throw new ArgumentNullException(nameof(assertion));
 

@@ -43,7 +43,7 @@ namespace Dotspec.Behaviour
             var preconditionMessage = "Precondition called";
             var behaviourMessage = "Behaviour called";
 
-            scenario.Spec<BehaviourSpec<object>>()
+            scenario.Spec<ActSpec<object>>()
                 .Given(() => new
                 {
                     // Given a precondition and a behaviour.
@@ -56,7 +56,7 @@ namespace Dotspec.Behaviour
                     // Then validate that the precondition and behaviour were
                     // passed to the SpecFactory.
                     (subject, data) => ValidateSpecFactoryWithAction(preconditionMessage, behaviourMessage))
-                .Assert(data => new BehaviourSpec<object>(data.precondition, SpecFactory));
+                .For(data => new ActSpec<object>(data.precondition, SpecFactory));
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Dotspec.Behaviour
             var preconditionMessage = "Precondition called";
             var behaviourMessage = $"Behaviour result {Guid.NewGuid()}";
 
-            scenario.Spec<BehaviourSpec<object>>()
+            scenario.Spec<ActSpec<object>>()
                 .Given(() => new
                 {
                     // Given a precondition and a behaviour.
@@ -84,7 +84,7 @@ namespace Dotspec.Behaviour
                     // Then validate that the precondition and behaviour were
                     // passed to the SpecFactory.
                     (subject, data) => ValidateSpecFactoryWithResult(preconditionMessage, behaviourMessage))
-                .Assert(data => new BehaviourSpec<object>(data.precondition, SpecFactory));
+                .For(data => new ActSpec<object>(data.precondition, SpecFactory));
         }
 
         private bool ValidateBehaviourWithResult(Func<object, string> behaviour, string behaviourMessage)

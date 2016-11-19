@@ -61,7 +61,7 @@ namespace Dotspec.Behaviour
                     // Then validate that precondition, behaviour and assertion 
                     // have been passed to the SpecFactory.
                     (subject, data) => ValidateSpecFactory(preconditionMessage, behaviourMessage, assertionMessage))
-                .Assert(data => new ResultAssertionSpec<object, string>(data.precondition, data.behaviour, SpecFactory));
+                .For(data => new ResultAssertionSpec<object, string>(data.precondition, data.behaviour, SpecFactory));
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Dotspec.Behaviour
                     // Then validate that precondition, behaviour and assertion 
                     // have been passed to the SpecFactory.
                     (subject, data) => ValidateSpecFactoryWithResult(preconditionMessage, behaviourMessage, expectedAssertionMessage))
-                .Assert(data => new ResultAssertionSpec<object, string>(data.precondition, data.behaviour, SpecFactory));
+                .For(data => new ResultAssertionSpec<object, string>(data.precondition, data.behaviour, SpecFactory));
         }
 
         private void ValidateSpecFactoryWithResult(string preconditionMessage, string behaviourMessage, string assertionMessage)

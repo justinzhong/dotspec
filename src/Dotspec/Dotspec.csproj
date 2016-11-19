@@ -46,29 +46,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assertable\Assertable.cs" />
-    <Compile Include="Assertable\Assertable%27TData.cs" />
-    <Compile Include="Postcondition\AssertionSpec.cs" />
-    <Compile Include="Postcondition\AssertionSpec%27TData.cs" />
-    <Compile Include="Trigger\BehaviourSpec.cs" />
-    <Compile Include="Trigger\BehaviourSpec%27TData.cs" />
-    <Compile Include="Assertable\IAssertable%27TData.cs" />
-    <Compile Include="Postcondition\IAssertionSpec.cs" />
+    <Compile Include="Subject\SubjectSpec.cs" />
+    <Compile Include="Subject\SubjectSpec%27TData.cs" />
+    <Compile Include="Assert\AssertionSpec.cs" />
+    <Compile Include="Assert\AssertionSpec%27TData.cs" />
+    <Compile Include="Act\ActSpec.cs" />
+    <Compile Include="Act\ActSpec%27TData.cs" />
+    <Compile Include="Subject\ISubjectSpec%27TData.cs" />
+    <Compile Include="Assert\IAssertionSpec.cs" />
     <Compile Include="DotspecExtension.cs" />
-    <Compile Include="Assertable\IAssertable.cs" />
-    <Compile Include="Postcondition\IAssertionSpec%27TData.cs" />
-    <Compile Include="Trigger\IBehaviourSpec.cs" />
-    <Compile Include="Trigger\IBehaviourSpec%27TData.cs" />
-    <Compile Include="Precondition\IPreconditionSpec.cs" />
-    <Compile Include="Assertable\IResultAssertable.cs" />
-    <Compile Include="Postcondition\IResultAssertionSpec.cs" />
+    <Compile Include="Subject\ISubjectSpec.cs" />
+    <Compile Include="Assert\IAssertionSpec%27TData.cs" />
+    <Compile Include="Act\IActSpec.cs" />
+    <Compile Include="Act\IActSpec%27TData.cs" />
+    <Compile Include="Arrange\IArrangeSpec.cs" />
+    <Compile Include="Subject\ISubjectConstructorSpec.cs" />
+    <Compile Include="Assert\IResultAssertionSpec.cs" />
     <Compile Include="ISpecFactory.cs" />
-    <Compile Include="Precondition\PreconditionSpec.cs" />
+    <Compile Include="Arrange\ArrangeSpec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Assertable\ResultAssertable.cs" />
-    <Compile Include="Assertable\ResultAssertable%27TData.cs" />
-    <Compile Include="Postcondition\ResultAssertionSpec.cs" />
-    <Compile Include="Postcondition\ResultAssertionSpec%27TData.cs" />
+    <Compile Include="Subject\SubjectResultSpec.cs" />
+    <Compile Include="Subject\SubjectResultSpec%27TData.cs" />
+    <Compile Include="Assert\ResultAssertionSpec.cs" />
+    <Compile Include="Assert\ResultAssertionSpec%27TData.cs" />
     <Compile Include="SpecFactory.cs" />
   </ItemGroup>
   <ItemGroup>

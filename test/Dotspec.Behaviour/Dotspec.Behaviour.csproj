@@ -86,7 +86,7 @@
     <Compile Include="AssertionSpecTests.cs" />
     <Compile Include="BehaviourSpec%27TDataTests.cs" />
     <Compile Include="BehaviourSpecTests.cs" />
-    <Compile Include="PreconditionSpecTests.cs" />
+    <Compile Include="Arrange\ArrangeSpecTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpecFactoryFixture.cs" />
   </ItemGroup>
